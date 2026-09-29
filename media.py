@@ -7,6 +7,14 @@ from PIL import Image, ImageDraw
 from avatarblend import decode_np
 
 
+def upscale_png_bytes(img, size=1024):
+    """uint8 (H,W,3) -> PNG bytes resized to `size`x`size` (Lanczos - same resampling the rest of the
+    app already uses for display, just at a larger target for downloads)."""
+    buf = io.BytesIO()
+    Image.fromarray(img).resize((size, size), Image.LANCZOS).save(buf, format="PNG")
+    return buf.getvalue()
+
+
 def _ease(t):
     return 0.5 - 0.5 * np.cos(np.pi * t)  # smooth start/stop
 

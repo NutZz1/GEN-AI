@@ -18,7 +18,7 @@ from . import config
 from .prompts import EXPLAINER_PROMPT_V1, EXPLAINER_PROMPT_VERSION, PARSER_PROMPT_V1, PARSER_PROMPT_VERSION, \
     PLANNER_PROMPT_V1, PLANNER_PROMPT_VERSION
 from .schemas import validate_parser_json
-from .tools import TOOL_IMPLS, TOOL_SCHEMAS, classify_avatar
+from .tools import TOOL_IMPLS, TOOL_SCHEMAS, classify_avatar, generate_from_constraints
 
 
 @dataclass
@@ -92,7 +92,7 @@ def _heuristic_plan(ctx, user_text, constraints):
     return {"name": "generate_from_constraints", "input": {"constraints": constraints}}
 
 
-def _verify(ctx, avatar, constraints):
+def verify_avatar(ctx, avatar, constraints):
     predicted = classify_avatar(ctx, avatar)
     if predicted is None:
         return None
@@ -137,7 +137,7 @@ def plan_act_verify(ctx, llm, user_text, parse: ParseResult):
             trace.append(ToolTrace(tool_call["name"], tool_call["input"], {"error": str(e)}, None))
             break
         final_avatar = avatar
-        verify = _verify(ctx, avatar, parse.constraints)
+        verify = verify_avatar(ctx, avatar, parse.constraints)
         trace.append(ToolTrace(tool_call["name"], tool_call["input"], summary, verify))
 
         missed = {t: v for t, v in (verify or {}).items() if not v["hit"]}
@@ -159,11 +159,38 @@ def plan_act_verify(ctx, llm, user_text, parse: ParseResult):
                 trace.append(ToolTrace(tool_call["name"], tool_call["input"], {"error": str(e)}, None))
                 break
             final_avatar = avatar
-            verify = _verify(ctx, avatar, parse.constraints)
+            verify = verify_avatar(ctx, avatar, parse.constraints)
             trace.append(ToolTrace(tool_call["name"], tool_call["input"], summary, verify))
             if not any(not v["hit"] for v in (verify or {}).values()):
                 break
     return final_avatar, trace, retries, plan_source
+
+
+def generate_verified_candidate(ctx, parse: ParseResult, residual_strength=0.7, name=None):
+    """Generate one avatar from already-parsed constraints and self-correct by re-rolling (fresh
+    random residual/unconstrained traits) up to MAX_RETRIES times if a requested trait doesn't verify.
+    No planner call needed here - the intent (generate) is already known, unlike plan_act_verify()."""
+    name = name or f"cand_{1}"
+    retries = 0
+    result = generate_from_constraints(ctx, parse.constraints, residual_strength, name=name)
+    verify = verify_avatar(ctx, result["avatar"], parse.constraints)
+    missed = {t: v for t, v in (verify or {}).items() if not v["hit"]}
+    while missed and retries < config.MAX_RETRIES - 1:
+        retries += 1
+        result = generate_from_constraints(ctx, parse.constraints, residual_strength, name=result["avatar"])
+        verify = verify_avatar(ctx, result["avatar"], parse.constraints)
+        missed = {t: v for t, v in (verify or {}).items() if not v["hit"]}
+    return {"name": result["avatar"], "img": result["img"], "labels": result["labels"],
+            "verify": verify, "retries": retries}
+
+
+def generate_candidates(ctx, llm, user_text, n=4, residual_strength=0.7):
+    """Parse once, then generate `n` independently-sampled, independently-verified candidates - used
+    by the "Describe it" tab's first turn (before the user has picked one to keep editing)."""
+    parse = parse_request(llm, user_text)
+    candidates = [generate_verified_candidate(ctx, parse, residual_strength, name=f"cand_{len(ctx.avatars) + 1}")
+                  for _ in range(n)]
+    return parse, candidates
 
 
 def explain(llm, user_text, parse: ParseResult, trace):
