@@ -1,0 +1,109 @@
+{"prompt": "medium brunette hair with pink square glasses and a moustache", "category": "compositional", "gold": {"hair": [26, 30, 32, 42, 48, 88, 98], "hair_color": [6], "glasses_color": [6], "glasses": [2, 3], "facial_hair": [5, 6]}, "split": "test", "id": "p000"}
+{"prompt": "buzz gray hair with golden round glasses and a beard", "category": "compositional", "gold": {"hair": [18, 20, 22], "hair_color": [8], "glasses_color": [5], "glasses": [0, 9], "facial_hair": [2, 3, 8, 9, 10, 11]}, "split": "test", "id": "p001"}
+{"prompt": "glasses illama, bald head mathiri", "category": "code_mixed", "gold": {"glasses": [11], "hair": [0, 1, 2, 19, 108, 109, 110]}, "split": "test", "id": "p002"}
+{"prompt": "pale skin, red curly hair", "category": "compositional", "gold": {"face_color": [10], "hair_color": [3, 2], "hair": [5, 7, 8, 9, 10, 11, 15, 16, 17, 24, 25, 27, 30, 31, 34, 35, 36, 37, 38, 39, 56, 78, 90, 97, 106]}, "split": "test", "id": "p003"}
+{"prompt": "gray buzz hair, sunglasses glasses", "category": "compositional", "gold": {"hair_color": [8], "hair": [18, 20, 22], "glasses": [1, 8, 9, 10]}, "split": "test", "id": "p004"}
+{"prompt": "wavy brunette hair with brown shades glasses and a mustache", "category": "compositional", "gold": {"hair": [26, 32, 33, 65, 82, 85, 91, 93, 94, 100, 103, 104], "hair_color": [6], "glasses_color": [1], "glasses": [1, 8, 9, 10], "facial_hair": [5, 6]}, "split": "test", "id": "p005"}
+{"prompt": "bald hair, clean-shaven, no glasses", "category": "negation", "gold": {"hair": [0, 1, 2, 19, 108, 109, 110], "facial_hair": [0, 1, 14], "glasses": [11]}, "split": "test", "id": "p006"}
+{"prompt": "blend avatar A and avatar B evenly", "category": "blend_edit", "gold": {"intent": "blend"}, "split": "test", "id": "p007"}
+{"prompt": "brunette hair and a beard, no glasses", "category": "negation", "gold": {"hair_color": [6], "facial_hair": [2, 3, 8, 9, 10, 11], "glasses": [11]}, "split": "test", "id": "p008"}
+{"prompt": "heart glasses", "category": "easy", "gold": {"glasses": [10]}, "split": "test", "id": "p009"}
+{"prompt": "black kalar hair mathiri onnu vendum", "category": "code_mixed", "gold": {"hair_color": [7]}, "split": "test", "id": "p010"}
+{"prompt": "bob platinum hair and dark skin, no beard", "category": "compositional", "gold": {"hair": [67, 75, 81, 86, 94, 101], "hair_color": [0], "face_color": [0, 1, 2], "facial_hair": [0, 1, 14]}, "split": "test", "id": "p011"}
+{"prompt": "sunglasses glasses", "category": "easy", "gold": {"glasses": [1, 8, 9, 10]}, "split": "test", "id": "p012"}
+{"prompt": "auburn hair", "category": "easy", "gold": {"hair_color": [3]}, "split": "test", "id": "p013"}
+{"prompt": "fair skin", "category": "easy", "gold": {"face_color": [9, 10]}, "split": "test", "id": "p014"}
+{"prompt": "thadi vendam, clean shaven aa irukanum", "category": "code_mixed", "gold": {"facial_hair": [0, 1, 14]}, "split": "test", "id": "p015"}
+{"prompt": "locs hair", "category": "easy", "gold": {"hair": [6, 13]}, "split": "test", "id": "p016"}
+{"prompt": "someone's grandma", "category": "vague", "gold": {"hair_color": [9, 9, 8]}, "split": "test", "id": "p017"}
+{"prompt": "red colour hair venum, curly aa", "category": "code_mixed", "gold": {"hair_color": [3, 2], "hair": [5, 7, 8, 9, 10, 11, 15, 16, 17, 24, 25, 27, 30, 31, 34, 35, 36, 37, 38, 39, 56, 78, 90, 97, 106]}, "split": "test", "id": "p018"}
+{"prompt": "no glasses, dreadlocks hair, clean shaven", "category": "negation", "gold": {"glasses": [11], "hair": [6, 13], "facial_hair": [0, 1, 14]}, "split": "test", "id": "p019"}
+{"prompt": "yellow sunglasses glasses, moustache, pigtails hair", "category": "compositional", "gold": {"glasses_color": [5], "glasses": [1, 8, 9, 10], "facial_hair": [5, 6], "hair": [3, 4, 28, 29, 41, 96]}, "split": "test", "id": "p020"}
+{"prompt": "breed avatar A and avatar B", "category": "blend_edit", "gold": {"intent": "breed"}, "split": "test", "id": "p021"}
+{"prompt": "a moustache", "category": "easy", "gold": {"facial_hair": [5, 6]}, "split": "test", "id": "p022"}
+{"prompt": "make the hair shorter", "category": "blend_edit", "gold": {"hair": null, "intent": "edit"}, "split": "test", "id": "p023"}
+{"prompt": "brown skin", "category": "easy", "gold": {"face_color": [3, 4, 5]}, "split": "test", "id": "p024"}
+{"prompt": "golden pigtails hair, no glasses", "category": "negation", "gold": {"hair_color": [1], "hair": [3, 4, 28, 29, 41, 96], "glasses": [11]}, "split": "test", "id": "p025"}
+{"prompt": "square glasses", "category": "easy", "gold": {"glasses": [2, 3]}, "split": "test", "id": "p026"}
+{"prompt": "golden glasses", "category": "easy", "gold": {"glasses_color": [5], "glasses": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}, "split": "test", "id": "p027"}
+{"prompt": "brunette ponytail hair, no glasses", "category": "negation", "gold": {"hair_color": [6], "hair": [87, 95, 102], "glasses": [11]}, "split": "test", "id": "p028"}
+{"prompt": "take avatar A but give it avatar B's hair", "category": "blend_edit", "gold": {"intent": "trait_mix"}, "split": "test", "id": "p029"}
+{"prompt": "medium orange hair and dark skin, no beard", "category": "compositional", "gold": {"hair": [26, 30, 32, 42, 48, 88, 98], "hair_color": [2], "face_color": [0, 1, 2], "facial_hair": [0, 1, 14]}, "split": "dev", "id": "p030"}
+{"prompt": "sandy hair", "category": "easy", "gold": {"hair_color": [4]}, "split": "dev", "id": "p031"}
+{"prompt": "change this avatar's hair colour to red", "category": "blend_edit", "gold": {"hair_color": null, "intent": "edit"}, "split": "dev", "id": "p032"}
+{"prompt": "a hipster barista", "category": "vague", "gold": {"facial_hair": [2, 3, 8, 9, 10, 11, 5, 6]}, "split": "dev", "id": "p033"}
+{"prompt": "braids hair", "category": "easy", "gold": {"hair": [13]}, "split": "dev", "id": "p034"}
+{"prompt": "tan skin", "category": "easy", "gold": {"face_color": [5, 6, 7]}, "split": "dev", "id": "p035"}
+{"prompt": "swept honey hair with red shades glasses and a goatee", "category": "compositional", "gold": {"hair": [48, 49, 53, 64, 70, 72, 88, 89], "hair_color": [4], "glasses_color": [3], "glasses": [1, 8, 9, 10], "facial_hair": [4, 7]}, "split": "dev", "id": "p036"}
+{"prompt": "pale skin, chestnut spiky hair", "category": "compositional", "gold": {"face_color": [10], "hair_color": [5], "hair": [23, 43, 46, 50, 52, 54, 77]}, "split": "dev", "id": "p037"}
+{"prompt": "a surfer dude", "category": "vague", "gold": {"hair": [26, 32, 33, 65, 82, 85, 91, 93, 94, 100, 103, 104, 6, 7, 13, 25, 33, 40, 47, 57, 58, 59, 60, 63, 65, 69, 71, 78, 79, 80, 82, 85, 93, 100, 103, 104]}, "split": "dev", "id": "p038"}
+{"prompt": "copper hair", "category": "easy", "gold": {"hair_color": [5]}, "split": "dev", "id": "p039"}
+{"prompt": "medium skin, red bun hair", "category": "compositional", "gold": {"face_color": [5, 6, 7], "hair_color": [3, 2], "hair": [55, 68, 84, 102]}, "split": "dev", "id": "p040"}
+{"prompt": "ginger short hair, heart glasses", "category": "compositional", "gold": {"hair_color": [2], "hair": [12, 14, 17, 21, 22, 23, 44, 45, 49, 51, 53, 61, 62, 66, 72, 73, 74, 76, 83, 89, 92, 99, 105, 107], "glasses": [10]}, "split": "dev", "id": "p041"}
+{"prompt": "looks like a friendly librarian", "category": "vague", "gold": {"glasses": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}, "split": "dev", "id": "p042"}
+{"prompt": "yellow swept hair, no glasses", "category": "negation", "gold": {"hair_color": [1], "hair": [48, 49, 53, 64, 70, 72, 88, 89], "glasses": [11]}, "split": "dev", "id": "p043"}
+{"prompt": "grey cateye glasses, goatee, dreadlocks hair", "category": "compositional", "gold": {"glasses_color": [4], "glasses": [8], "facial_hair": [4, 7], "hair": [6, 13]}, "split": "dev", "id": "p044"}
+{"prompt": "ponytail yellow hair and pale skin, no beard", "category": "compositional", "gold": {"hair": [87, 95, 102], "hair_color": [1], "face_color": [10], "facial_hair": [0, 1, 14]}, "split": "dev", "id": "p045"}
+{"prompt": "chestnut hair", "category": "easy", "gold": {"hair_color": [5]}, "split": "dev", "id": "p046"}
+{"prompt": "an old sailor", "category": "vague", "gold": {"facial_hair": [2, 3, 8, 9, 10, 11], "hair_color": [8, 9]}, "split": "dev", "id": "p047"}
+{"prompt": "curly auburn hair and brown skin, no beard", "category": "compositional", "gold": {"hair": [5, 7, 8, 9, 10, 11, 15, 16, 17, 24, 25, 27, 30, 31, 34, 35, 36, 37, 38, 39, 56, 78, 90, 97, 106], "hair_color": [3], "face_color": [3, 4, 5], "facial_hair": [0, 1, 14]}, "split": "dev", "id": "p048"}
+{"prompt": "a mustache", "category": "easy", "gold": {"facial_hair": [5, 6]}, "split": "dev", "id": "p049"}
+{"prompt": "deep skin", "category": "easy", "gold": {"face_color": [0, 1]}, "split": "dev", "id": "p050"}
+{"prompt": "black square glasses, goatee, bob hair", "category": "compositional", "gold": {"glasses_color": [0], "glasses": [2, 3], "facial_hair": [4, 7], "hair": [67, 75, 81, 86, 94, 101]}, "split": "dev", "id": "p051"}
+{"prompt": "blonde hair and a beard, no glasses", "category": "negation", "gold": {"hair_color": [0, 1], "facial_hair": [2, 3, 8, 9, 10, 11], "glasses": [11]}, "split": "dev", "id": "p052"}
+{"prompt": "orange braids hair, no glasses", "category": "negation", "gold": {"hair_color": [2], "hair": [13], "glasses": [11]}, "split": "dev", "id": "p053"}
+{"prompt": "give this avatar sunglasses instead", "category": "blend_edit", "gold": {"glasses": null, "intent": "edit"}, "split": "dev", "id": "p054"}
+{"prompt": "medium skin, sandy short hair", "category": "compositional", "gold": {"face_color": [5, 6, 7], "hair_color": [4], "hair": [12, 14, 17, 21, 22, 23, 44, 45, 49, 51, 53, 61, 62, 66, 72, 73, 74, 76, 83, 89, 92, 99, 105, 107]}, "split": "dev", "id": "p055"}
+{"prompt": "a monk", "category": "vague", "gold": {"hair": [0, 1, 2, 19, 108, 109, 110], "facial_hair": [0, 1, 14]}, "split": "dev", "id": "p056"}
+{"prompt": "no glasses, medium hair, clean shaven", "category": "negation", "gold": {"glasses": [11], "hair": [26, 30, 32, 42, 48, 88, 98], "facial_hair": [0, 1, 14]}, "split": "dev", "id": "p057"}
+{"prompt": "buzz hair", "category": "easy", "gold": {"hair": [18, 20, 22]}, "split": "dev", "id": "p058"}
+{"prompt": "chestnut buzz hair, no glasses", "category": "negation", "gold": {"hair_color": [5], "hair": [18, 20, 22], "glasses": [11]}, "split": "dev", "id": "p059"}
+{"prompt": "pink glasses", "category": "easy", "gold": {"glasses_color": [6], "glasses": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}, "split": "dev", "id": "p060"}
+{"prompt": "afro hair, clean-shaven, no glasses", "category": "negation", "gold": {"hair": [5, 15, 16], "facial_hair": [0, 1, 14], "glasses": [11]}, "split": "dev", "id": "p061"}
+{"prompt": "bald blond hair and olive skin, no beard", "category": "compositional", "gold": {"hair": [0, 1, 2, 19, 108, 109, 110], "hair_color": [0, 1], "face_color": [5, 6], "facial_hair": [0, 1, 14]}, "split": "dev", "id": "p062"}
+{"prompt": "glasses glasses", "category": "easy", "gold": {"glasses": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}, "split": "dev", "id": "p063"}
+{"prompt": "a detective in a noir film", "category": "vague", "gold": {"glasses": [0, 9]}, "split": "dev", "id": "p064"}
+{"prompt": "grey glasses", "category": "easy", "gold": {"glasses_color": [4], "glasses": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}, "split": "dev", "id": "p065"}
+{"prompt": "spiky white hair and medium skin, no beard", "category": "compositional", "gold": {"hair": [23, 43, 46, 50, 52, 54, 77], "hair_color": [9], "face_color": [5, 6, 7], "facial_hair": [0, 1, 14]}, "split": "dev", "id": "p066"}
+{"prompt": "use avatar 3's hairstyle on avatar 7", "category": "blend_edit", "gold": {"intent": "trait_mix"}, "split": "dev", "id": "p067"}
+{"prompt": "beard onnu venum, black colour", "category": "code_mixed", "gold": {"facial_hair": [2, 3, 8, 9, 10, 11]}, "split": "dev", "id": "p068"}
+{"prompt": "an anime protagonist", "category": "vague", "gold": {"hair": [23, 43, 46, 50, 52, 54, 77]}, "split": "dev", "id": "p069"}
+{"prompt": "a beard", "category": "easy", "gold": {"facial_hair": [2, 3, 8, 9, 10, 11]}, "split": "dev", "id": "p070"}
+{"prompt": "a wizard", "category": "vague", "gold": {"facial_hair": [2, 3, 8, 9, 10, 11]}, "split": "dev", "id": "p071"}
+{"prompt": "mix parent A with parent B, mostly A", "category": "blend_edit", "gold": {"intent": "blend"}, "split": "dev", "id": "p072"}
+{"prompt": "ponytail hair", "category": "easy", "gold": {"hair": [87, 95, 102]}, "split": "dev", "id": "p073"}
+{"prompt": "straight hair, blonde aa maathunga", "category": "code_mixed", "gold": {"hair": [40, 42, 47, 57, 58, 59, 60, 63, 69, 71, 79, 80], "hair_color": [0, 1]}, "split": "dev", "id": "p074"}
+{"prompt": "shades glasses", "category": "easy", "gold": {"glasses": [1, 8, 9, 10]}, "split": "dev", "id": "p075"}
+{"prompt": "chinna mustache mathiri onnu vendum", "category": "code_mixed", "gold": {"facial_hair": [5, 6]}, "split": "dev", "id": "p076"}
+{"prompt": "orange medium hair, shades glasses", "category": "compositional", "gold": {"hair_color": [2], "hair": [26, 30, 32, 42, 48, 88, 98], "glasses": [1, 8, 9, 10]}, "split": "dev", "id": "p077"}
+{"prompt": "yellow bun hair, cateye glasses", "category": "compositional", "gold": {"hair_color": [1], "hair": [55, 68, 84, 102], "glasses": [8]}, "split": "dev", "id": "p078"}
+{"prompt": "long dark hair with golden round glasses and a beard", "category": "compositional", "gold": {"hair": [6, 7, 13, 25, 33, 40, 47, 57, 58, 59, 60, 63, 65, 69, 71, 78, 79, 80, 82, 85, 93, 100, 103, 104], "hair_color": [7, 6], "glasses_color": [5], "glasses": [0, 9], "facial_hair": [2, 3, 8, 9, 10, 11]}, "split": "dev", "id": "p079"}
+{"prompt": "black glasses", "category": "easy", "gold": {"glasses_color": [0], "glasses": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}, "split": "dev", "id": "p080"}
+{"prompt": "blue glasses", "category": "easy", "gold": {"glasses_color": [2], "glasses": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}, "split": "dev", "id": "p081"}
+{"prompt": "sidepart hair", "category": "easy", "gold": {"hair": [48, 49, 53, 64, 70, 72, 88, 89]}, "split": "dev", "id": "p082"}
+{"prompt": "topknot blonde hair with yellow shades glasses and a moustache", "category": "compositional", "gold": {"hair": [55, 68, 84], "hair_color": [0, 1], "glasses_color": [5], "glasses": [1, 8, 9, 10], "facial_hair": [5, 6]}, "split": "dev", "id": "p083"}
+{"prompt": "a punk rocker", "category": "vague", "gold": {"hair": [23, 43, 46, 50, 52, 54, 77]}, "split": "dev", "id": "p084"}
+{"prompt": "ponytail sandy hair with pink clear glasses and a goatee", "category": "compositional", "gold": {"hair": [87, 95, 102], "hair_color": [4], "glasses_color": [6], "glasses": [0, 2, 3, 4, 5, 6, 7], "facial_hair": [4, 7]}, "split": "dev", "id": "p085"}
+{"prompt": "make a new avatar from scratch with curly red hair", "category": "blend_edit", "gold": {"hair": [5, 7, 8, 9, 10, 11, 15, 16, 17, 24, 25, 27, 30, 31, 34, 35, 36, 37, 38, 39, 56, 78, 90, 97, 106], "hair_color": [3, 2], "intent": "generate"}, "split": "dev", "id": "p086"}
+{"prompt": "a goatee", "category": "easy", "gold": {"facial_hair": [4, 7]}, "split": "dev", "id": "p087"}
+{"prompt": "bun hair, clean-shaven, no glasses", "category": "negation", "gold": {"hair": [55, 68, 84, 102], "facial_hair": [0, 1, 14], "glasses": [11]}, "split": "dev", "id": "p088"}
+{"prompt": "black clear glasses, beard, updo hair", "category": "compositional", "gold": {"glasses_color": [0], "glasses": [0, 2, 3, 4, 5, 6, 7], "facial_hair": [2, 3, 8, 9, 10, 11], "hair": [55, 68, 84, 102]}, "split": "dev", "id": "p089"}
+{"prompt": "gray bald hair, cateye glasses", "category": "compositional", "gold": {"hair_color": [8], "hair": [0, 1, 2, 19, 108, 109, 110], "glasses": [8]}, "split": "dev", "id": "p090"}
+{"prompt": "a goth", "category": "vague", "gold": {"hair_color": [7], "glasses": [1, 8, 9, 10]}, "split": "dev", "id": "p091"}
+{"prompt": "ginger ponytail hair, clear glasses", "category": "compositional", "gold": {"hair_color": [2], "hair": [87, 95, 102], "glasses": [0, 2, 3, 4, 5, 6, 7]}, "split": "dev", "id": "p092"}
+{"prompt": "a scientist", "category": "vague", "gold": {"glasses": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}, "split": "dev", "id": "p093"}
+{"prompt": "kannadi venam, sunglasses type", "category": "code_mixed", "gold": {"glasses": [1, 8, 9, 10]}, "split": "dev", "id": "p094"}
+{"prompt": "white locs hair, no glasses", "category": "negation", "gold": {"hair_color": [9], "hair": [6, 13], "glasses": [11]}, "split": "dev", "id": "p095"}
+{"prompt": "a rockstar with attitude", "category": "vague", "gold": {"glasses": [1, 8, 9, 10]}, "split": "dev", "id": "p096"}
+{"prompt": "a corporate executive, very clean cut", "category": "vague", "gold": {"facial_hair": [0, 1, 14], "hair": [12, 14, 17, 21, 22, 23, 44, 45, 49, 51, 53, 61, 62, 66, 72, 73, 74, 76, 83, 89, 92, 99, 105, 107]}, "split": "dev", "id": "p097"}
+{"prompt": "romba curly hair venum", "category": "code_mixed", "gold": {"hair": [5, 7, 8, 9, 10, 11, 15, 16, 17, 24, 25, 27, 30, 31, 34, 35, 36, 37, 38, 39, 56, 78, 90, 97, 106]}, "split": "dev", "id": "p098"}
+{"prompt": "nalla tanned skin venam", "category": "code_mixed", "gold": {"face_color": [5, 6, 7]}, "split": "dev", "id": "p099"}
+{"prompt": "blend A and B then make the result clean-shaven", "category": "blend_edit", "gold": {"facial_hair": [0, 1, 14], "intent": "blend"}, "split": "dev", "id": "p100"}
+{"prompt": "yellow hair and a beard, no glasses", "category": "negation", "gold": {"hair_color": [1], "facial_hair": [2, 3, 8, 9, 10, 11], "glasses": [11]}, "split": "dev", "id": "p101"}
+{"prompt": "blond ponytail hair, cateye glasses", "category": "compositional", "gold": {"hair_color": [0, 1], "hair": [87, 95, 102], "glasses": [8]}, "split": "dev", "id": "p102"}
+{"prompt": "grey mohawk hair, rectangular glasses", "category": "compositional", "gold": {"hair_color": [8], "hair": [43, 46, 50], "glasses": [2, 3]}, "split": "dev", "id": "p103"}
+{"prompt": "yellow ponytail hair, no glasses", "category": "negation", "gold": {"hair_color": [1], "hair": [87, 95, 102], "glasses": [11]}, "split": "dev", "id": "p104"}
+{"prompt": "brown round glasses, mustache, bun hair", "category": "compositional", "gold": {"glasses_color": [1], "glasses": [0, 9], "facial_hair": [5, 6], "hair": [55, 68, 84, 102]}, "split": "dev", "id": "p105"}
+{"prompt": "a k-pop idol", "category": "vague", "gold": {"hair": [40, 42, 47, 57, 58, 59, 60, 63, 69, 71, 79, 80]}, "split": "dev", "id": "p106"}
+{"prompt": "olive skin", "category": "easy", "gold": {"face_color": [5, 6]}, "split": "dev", "id": "p107"}
+{"prompt": "black hair", "category": "easy", "gold": {"hair_color": [7]}, "split": "dev", "id": "p108"}

@@ -1,0 +1,1762 @@
+{
+ "dataset_source": "data/cartoonset128.npz",
+ "built_by": "knowledge/build_ontology.py",
+ "traits": {
+  "hair": {
+   "label": "Hairstyle",
+   "n_variants": 111,
+   "index": {
+    "bald": [
+     0,
+     1,
+     2,
+     19,
+     108,
+     109,
+     110
+    ],
+    "buzz": [
+     18,
+     20,
+     22
+    ],
+    "shaved": [
+     18,
+     20,
+     22
+    ],
+    "bun": [
+     55,
+     68,
+     84,
+     102
+    ],
+    "topknot": [
+     55,
+     68,
+     84
+    ],
+    "updo": [
+     55,
+     68,
+     84,
+     102
+    ],
+    "pigtails": [
+     3,
+     4,
+     28,
+     29,
+     41,
+     96
+    ],
+    "buns": [
+     3,
+     28
+    ],
+    "ponytail": [
+     87,
+     95,
+     102
+    ],
+    "afro": [
+     5,
+     15,
+     16
+    ],
+    "dreadlocks": [
+     6,
+     13
+    ],
+    "dreads": [
+     6,
+     13
+    ],
+    "locs": [
+     6,
+     13
+    ],
+    "braids": [
+     13
+    ],
+    "spiky": [
+     23,
+     43,
+     46,
+     50,
+     52,
+     54,
+     77
+    ],
+    "mohawk": [
+     43,
+     46,
+     50
+    ],
+    "curly": [
+     5,
+     7,
+     8,
+     9,
+     10,
+     11,
+     15,
+     16,
+     17,
+     24,
+     25,
+     27,
+     30,
+     31,
+     34,
+     35,
+     36,
+     37,
+     38,
+     39,
+     56,
+     78,
+     90,
+     97,
+     106
+    ],
+    "wavy": [
+     26,
+     32,
+     33,
+     65,
+     82,
+     85,
+     91,
+     93,
+     94,
+     100,
+     103,
+     104
+    ],
+    "straight": [
+     40,
+     42,
+     47,
+     57,
+     58,
+     59,
+     60,
+     63,
+     69,
+     71,
+     79,
+     80
+    ],
+    "long": [
+     6,
+     7,
+     13,
+     25,
+     33,
+     40,
+     47,
+     57,
+     58,
+     59,
+     60,
+     63,
+     65,
+     69,
+     71,
+     78,
+     79,
+     80,
+     82,
+     85,
+     93,
+     100,
+     103,
+     104
+    ],
+    "medium": [
+     26,
+     30,
+     32,
+     42,
+     48,
+     88,
+     98
+    ],
+    "short": [
+     12,
+     14,
+     17,
+     21,
+     22,
+     23,
+     44,
+     45,
+     49,
+     51,
+     53,
+     61,
+     62,
+     66,
+     72,
+     73,
+     74,
+     76,
+     83,
+     89,
+     92,
+     99,
+     105,
+     107
+    ],
+    "bob": [
+     67,
+     75,
+     81,
+     86,
+     94,
+     101
+    ],
+    "swept": [
+     48,
+     49,
+     53,
+     64,
+     70,
+     72,
+     88,
+     89
+    ],
+    "sidepart": [
+     48,
+     49,
+     53,
+     64,
+     70,
+     72,
+     88,
+     89
+    ]
+   },
+   "special": {},
+   "variants": {
+    "0": {
+     "tags": [
+      "bald"
+     ],
+     "description": "bald"
+    },
+    "1": {
+     "tags": [
+      "bald"
+     ],
+     "description": "bald"
+    },
+    "2": {
+     "tags": [
+      "bald"
+     ],
+     "description": "bald"
+    },
+    "3": {
+     "tags": [
+      "pigtails",
+      "buns"
+     ],
+     "description": "pigtails, buns"
+    },
+    "4": {
+     "tags": [
+      "pigtails"
+     ],
+     "description": "pigtails"
+    },
+    "5": {
+     "tags": [
+      "afro",
+      "curly"
+     ],
+     "description": "afro, curly"
+    },
+    "6": {
+     "tags": [
+      "dreadlocks",
+      "dreads",
+      "locs",
+      "long"
+     ],
+     "description": "dreadlocks, dreads, locs, long"
+    },
+    "7": {
+     "tags": [
+      "curly",
+      "long"
+     ],
+     "description": "curly, long"
+    },
+    "8": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "9": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "10": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "11": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "12": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "13": {
+     "tags": [
+      "dreadlocks",
+      "dreads",
+      "locs",
+      "braids",
+      "long"
+     ],
+     "description": "dreadlocks, dreads, locs, braids, long"
+    },
+    "14": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "15": {
+     "tags": [
+      "afro",
+      "curly"
+     ],
+     "description": "afro, curly"
+    },
+    "16": {
+     "tags": [
+      "afro",
+      "curly"
+     ],
+     "description": "afro, curly"
+    },
+    "17": {
+     "tags": [
+      "curly",
+      "short"
+     ],
+     "description": "curly, short"
+    },
+    "18": {
+     "tags": [
+      "buzz",
+      "shaved"
+     ],
+     "description": "buzz, shaved"
+    },
+    "19": {
+     "tags": [
+      "bald"
+     ],
+     "description": "bald"
+    },
+    "20": {
+     "tags": [
+      "buzz",
+      "shaved"
+     ],
+     "description": "buzz, shaved"
+    },
+    "21": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "22": {
+     "tags": [
+      "buzz",
+      "shaved",
+      "short"
+     ],
+     "description": "buzz, shaved, short"
+    },
+    "23": {
+     "tags": [
+      "spiky",
+      "short"
+     ],
+     "description": "spiky, short"
+    },
+    "24": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "25": {
+     "tags": [
+      "curly",
+      "long"
+     ],
+     "description": "curly, long"
+    },
+    "26": {
+     "tags": [
+      "wavy",
+      "medium"
+     ],
+     "description": "wavy, medium"
+    },
+    "27": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "28": {
+     "tags": [
+      "pigtails",
+      "buns"
+     ],
+     "description": "pigtails, buns"
+    },
+    "29": {
+     "tags": [
+      "pigtails"
+     ],
+     "description": "pigtails"
+    },
+    "30": {
+     "tags": [
+      "curly",
+      "medium"
+     ],
+     "description": "curly, medium"
+    },
+    "31": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "32": {
+     "tags": [
+      "wavy",
+      "medium"
+     ],
+     "description": "wavy, medium"
+    },
+    "33": {
+     "tags": [
+      "wavy",
+      "long"
+     ],
+     "description": "wavy, long"
+    },
+    "34": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "35": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "36": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "37": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "38": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "39": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "40": {
+     "tags": [
+      "straight",
+      "long"
+     ],
+     "description": "straight, long"
+    },
+    "41": {
+     "tags": [
+      "pigtails"
+     ],
+     "description": "pigtails"
+    },
+    "42": {
+     "tags": [
+      "straight",
+      "medium"
+     ],
+     "description": "straight, medium"
+    },
+    "43": {
+     "tags": [
+      "spiky",
+      "mohawk"
+     ],
+     "description": "spiky, mohawk"
+    },
+    "44": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "45": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "46": {
+     "tags": [
+      "spiky",
+      "mohawk"
+     ],
+     "description": "spiky, mohawk"
+    },
+    "47": {
+     "tags": [
+      "straight",
+      "long"
+     ],
+     "description": "straight, long"
+    },
+    "48": {
+     "tags": [
+      "medium",
+      "swept",
+      "sidepart"
+     ],
+     "description": "medium, swept, sidepart"
+    },
+    "49": {
+     "tags": [
+      "short",
+      "swept",
+      "sidepart"
+     ],
+     "description": "short, swept, sidepart"
+    },
+    "50": {
+     "tags": [
+      "spiky",
+      "mohawk"
+     ],
+     "description": "spiky, mohawk"
+    },
+    "51": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "52": {
+     "tags": [
+      "spiky"
+     ],
+     "description": "spiky"
+    },
+    "53": {
+     "tags": [
+      "short",
+      "swept",
+      "sidepart"
+     ],
+     "description": "short, swept, sidepart"
+    },
+    "54": {
+     "tags": [
+      "spiky"
+     ],
+     "description": "spiky"
+    },
+    "55": {
+     "tags": [
+      "bun",
+      "topknot",
+      "updo"
+     ],
+     "description": "bun, topknot, updo"
+    },
+    "56": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "57": {
+     "tags": [
+      "straight",
+      "long"
+     ],
+     "description": "straight, long"
+    },
+    "58": {
+     "tags": [
+      "straight",
+      "long"
+     ],
+     "description": "straight, long"
+    },
+    "59": {
+     "tags": [
+      "straight",
+      "long"
+     ],
+     "description": "straight, long"
+    },
+    "60": {
+     "tags": [
+      "straight",
+      "long"
+     ],
+     "description": "straight, long"
+    },
+    "61": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "62": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "63": {
+     "tags": [
+      "straight",
+      "long"
+     ],
+     "description": "straight, long"
+    },
+    "64": {
+     "tags": [
+      "swept",
+      "sidepart"
+     ],
+     "description": "swept, sidepart"
+    },
+    "65": {
+     "tags": [
+      "wavy",
+      "long"
+     ],
+     "description": "wavy, long"
+    },
+    "66": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "67": {
+     "tags": [
+      "bob"
+     ],
+     "description": "bob"
+    },
+    "68": {
+     "tags": [
+      "bun",
+      "topknot",
+      "updo"
+     ],
+     "description": "bun, topknot, updo"
+    },
+    "69": {
+     "tags": [
+      "straight",
+      "long"
+     ],
+     "description": "straight, long"
+    },
+    "70": {
+     "tags": [
+      "swept",
+      "sidepart"
+     ],
+     "description": "swept, sidepart"
+    },
+    "71": {
+     "tags": [
+      "straight",
+      "long"
+     ],
+     "description": "straight, long"
+    },
+    "72": {
+     "tags": [
+      "short",
+      "swept",
+      "sidepart"
+     ],
+     "description": "short, swept, sidepart"
+    },
+    "73": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "74": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "75": {
+     "tags": [
+      "bob"
+     ],
+     "description": "bob"
+    },
+    "76": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "77": {
+     "tags": [
+      "spiky"
+     ],
+     "description": "spiky"
+    },
+    "78": {
+     "tags": [
+      "curly",
+      "long"
+     ],
+     "description": "curly, long"
+    },
+    "79": {
+     "tags": [
+      "straight",
+      "long"
+     ],
+     "description": "straight, long"
+    },
+    "80": {
+     "tags": [
+      "straight",
+      "long"
+     ],
+     "description": "straight, long"
+    },
+    "81": {
+     "tags": [
+      "bob"
+     ],
+     "description": "bob"
+    },
+    "82": {
+     "tags": [
+      "wavy",
+      "long"
+     ],
+     "description": "wavy, long"
+    },
+    "83": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "84": {
+     "tags": [
+      "bun",
+      "topknot",
+      "updo"
+     ],
+     "description": "bun, topknot, updo"
+    },
+    "85": {
+     "tags": [
+      "wavy",
+      "long"
+     ],
+     "description": "wavy, long"
+    },
+    "86": {
+     "tags": [
+      "bob"
+     ],
+     "description": "bob"
+    },
+    "87": {
+     "tags": [
+      "ponytail"
+     ],
+     "description": "ponytail"
+    },
+    "88": {
+     "tags": [
+      "medium",
+      "swept",
+      "sidepart"
+     ],
+     "description": "medium, swept, sidepart"
+    },
+    "89": {
+     "tags": [
+      "short",
+      "swept",
+      "sidepart"
+     ],
+     "description": "short, swept, sidepart"
+    },
+    "90": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "91": {
+     "tags": [
+      "wavy"
+     ],
+     "description": "wavy"
+    },
+    "92": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "93": {
+     "tags": [
+      "wavy",
+      "long"
+     ],
+     "description": "wavy, long"
+    },
+    "94": {
+     "tags": [
+      "wavy",
+      "bob"
+     ],
+     "description": "wavy, bob"
+    },
+    "95": {
+     "tags": [
+      "ponytail"
+     ],
+     "description": "ponytail"
+    },
+    "96": {
+     "tags": [
+      "pigtails"
+     ],
+     "description": "pigtails"
+    },
+    "97": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "98": {
+     "tags": [
+      "medium"
+     ],
+     "description": "medium"
+    },
+    "99": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "100": {
+     "tags": [
+      "wavy",
+      "long"
+     ],
+     "description": "wavy, long"
+    },
+    "101": {
+     "tags": [
+      "bob"
+     ],
+     "description": "bob"
+    },
+    "102": {
+     "tags": [
+      "bun",
+      "updo",
+      "ponytail"
+     ],
+     "description": "bun, updo, ponytail"
+    },
+    "103": {
+     "tags": [
+      "wavy",
+      "long"
+     ],
+     "description": "wavy, long"
+    },
+    "104": {
+     "tags": [
+      "wavy",
+      "long"
+     ],
+     "description": "wavy, long"
+    },
+    "105": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "106": {
+     "tags": [
+      "curly"
+     ],
+     "description": "curly"
+    },
+    "107": {
+     "tags": [
+      "short"
+     ],
+     "description": "short"
+    },
+    "108": {
+     "tags": [
+      "bald"
+     ],
+     "description": "bald"
+    },
+    "109": {
+     "tags": [
+      "bald"
+     ],
+     "description": "bald"
+    },
+    "110": {
+     "tags": [
+      "bald"
+     ],
+     "description": "bald"
+    }
+   }
+  },
+  "hair_color": {
+   "label": "Hair colour",
+   "n_variants": 10,
+   "index": {
+    "platinum": [
+     0
+    ],
+    "blonde": [
+     0,
+     1
+    ],
+    "blond": [
+     0,
+     1
+    ],
+    "golden": [
+     1
+    ],
+    "yellow": [
+     1
+    ],
+    "ginger": [
+     2
+    ],
+    "orange": [
+     2
+    ],
+    "red": [
+     3,
+     2
+    ],
+    "redhead": [
+     3,
+     2
+    ],
+    "auburn": [
+     3
+    ],
+    "honey": [
+     4
+    ],
+    "sandy": [
+     4
+    ],
+    "copper": [
+     5
+    ],
+    "brown": [
+     6,
+     5
+    ],
+    "brunette": [
+     6
+    ],
+    "chestnut": [
+     5
+    ],
+    "black": [
+     7
+    ],
+    "dark": [
+     7,
+     6
+    ],
+    "grey": [
+     8
+    ],
+    "gray": [
+     8
+    ],
+    "silver": [
+     9,
+     8
+    ],
+    "white": [
+     9
+    ]
+   },
+   "special": {},
+   "variants": {
+    "0": {
+     "tags": [
+      "platinum",
+      "blonde",
+      "blond"
+     ],
+     "description": "platinum, blonde, blond"
+    },
+    "1": {
+     "tags": [
+      "blonde",
+      "blond",
+      "golden",
+      "yellow"
+     ],
+     "description": "blonde, blond, golden, yellow"
+    },
+    "2": {
+     "tags": [
+      "ginger",
+      "orange",
+      "red",
+      "redhead"
+     ],
+     "description": "ginger, orange, red, redhead"
+    },
+    "3": {
+     "tags": [
+      "red",
+      "redhead",
+      "auburn"
+     ],
+     "description": "red, redhead, auburn"
+    },
+    "4": {
+     "tags": [
+      "honey",
+      "sandy"
+     ],
+     "description": "honey, sandy"
+    },
+    "5": {
+     "tags": [
+      "copper",
+      "brown",
+      "chestnut"
+     ],
+     "description": "copper, brown, chestnut"
+    },
+    "6": {
+     "tags": [
+      "brown",
+      "brunette",
+      "dark"
+     ],
+     "description": "brown, brunette, dark"
+    },
+    "7": {
+     "tags": [
+      "black",
+      "dark"
+     ],
+     "description": "black, dark"
+    },
+    "8": {
+     "tags": [
+      "grey",
+      "gray",
+      "silver"
+     ],
+     "description": "grey, gray, silver"
+    },
+    "9": {
+     "tags": [
+      "silver",
+      "white"
+     ],
+     "description": "silver, white"
+    }
+   }
+  },
+  "glasses": {
+   "label": "Glasses",
+   "n_variants": 12,
+   "index": {
+    "glasses": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "specs": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "spectacles": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "sunglasses": [
+     1,
+     8,
+     9,
+     10
+    ],
+    "shades": [
+     1,
+     8,
+     9,
+     10
+    ],
+    "heart": [
+     10
+    ],
+    "cateye": [
+     8
+    ],
+    "round": [
+     0,
+     9
+    ],
+    "rectangular": [
+     2,
+     3
+    ],
+    "square": [
+     2,
+     3
+    ],
+    "clear": [
+     0,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "special": {
+    "no_glasses": [
+     11
+    ]
+   },
+   "variants": {
+    "0": {
+     "tags": [
+      "glasses",
+      "specs",
+      "spectacles",
+      "round",
+      "clear"
+     ],
+     "description": "glasses, specs, spectacles, round, clear"
+    },
+    "1": {
+     "tags": [
+      "glasses",
+      "specs",
+      "spectacles",
+      "sunglasses",
+      "shades"
+     ],
+     "description": "glasses, specs, spectacles, sunglasses, shades"
+    },
+    "2": {
+     "tags": [
+      "glasses",
+      "specs",
+      "spectacles",
+      "rectangular",
+      "square",
+      "clear"
+     ],
+     "description": "glasses, specs, spectacles, rectangular, square, clear"
+    },
+    "3": {
+     "tags": [
+      "glasses",
+      "specs",
+      "spectacles",
+      "rectangular",
+      "square",
+      "clear"
+     ],
+     "description": "glasses, specs, spectacles, rectangular, square, clear"
+    },
+    "4": {
+     "tags": [
+      "glasses",
+      "specs",
+      "spectacles",
+      "clear"
+     ],
+     "description": "glasses, specs, spectacles, clear"
+    },
+    "5": {
+     "tags": [
+      "glasses",
+      "specs",
+      "spectacles",
+      "clear"
+     ],
+     "description": "glasses, specs, spectacles, clear"
+    },
+    "6": {
+     "tags": [
+      "glasses",
+      "specs",
+      "spectacles",
+      "clear"
+     ],
+     "description": "glasses, specs, spectacles, clear"
+    },
+    "7": {
+     "tags": [
+      "glasses",
+      "specs",
+      "spectacles",
+      "clear"
+     ],
+     "description": "glasses, specs, spectacles, clear"
+    },
+    "8": {
+     "tags": [
+      "glasses",
+      "specs",
+      "spectacles",
+      "sunglasses",
+      "shades",
+      "cateye"
+     ],
+     "description": "glasses, specs, spectacles, sunglasses, shades, cateye"
+    },
+    "9": {
+     "tags": [
+      "glasses",
+      "specs",
+      "spectacles",
+      "sunglasses",
+      "shades",
+      "round"
+     ],
+     "description": "glasses, specs, spectacles, sunglasses, shades, round"
+    },
+    "10": {
+     "tags": [
+      "glasses",
+      "specs",
+      "spectacles",
+      "sunglasses",
+      "shades",
+      "heart"
+     ],
+     "description": "glasses, specs, spectacles, sunglasses, shades, heart"
+    },
+    "11": {
+     "tags": [],
+     "description": ""
+    }
+   }
+  },
+  "glasses_color": {
+   "label": "Glasses colour",
+   "n_variants": 7,
+   "index": {
+    "black": [
+     0
+    ],
+    "brown": [
+     1
+    ],
+    "blue": [
+     2
+    ],
+    "red": [
+     3
+    ],
+    "grey": [
+     4
+    ],
+    "gray": [
+     4
+    ],
+    "gold": [
+     5
+    ],
+    "golden": [
+     5
+    ],
+    "yellow": [
+     5
+    ],
+    "pink": [
+     6
+    ]
+   },
+   "special": {},
+   "variants": {
+    "0": {
+     "tags": [
+      "black"
+     ],
+     "description": "black"
+    },
+    "1": {
+     "tags": [
+      "brown"
+     ],
+     "description": "brown"
+    },
+    "2": {
+     "tags": [
+      "blue"
+     ],
+     "description": "blue"
+    },
+    "3": {
+     "tags": [
+      "red"
+     ],
+     "description": "red"
+    },
+    "4": {
+     "tags": [
+      "grey",
+      "gray"
+     ],
+     "description": "grey, gray"
+    },
+    "5": {
+     "tags": [
+      "gold",
+      "golden",
+      "yellow"
+     ],
+     "description": "gold, golden, yellow"
+    },
+    "6": {
+     "tags": [
+      "pink"
+     ],
+     "description": "pink"
+    }
+   }
+  },
+  "facial_hair": {
+   "label": "Facial hair",
+   "n_variants": 15,
+   "index": {
+    "beard": [
+     2,
+     3,
+     8,
+     9,
+     10,
+     11
+    ],
+    "bearded": [
+     2,
+     3,
+     8,
+     9,
+     10,
+     11
+    ],
+    "goatee": [
+     4,
+     7
+    ],
+    "mustache": [
+     5,
+     6
+    ],
+    "moustache": [
+     5,
+     6
+    ]
+   },
+   "special": {
+    "clean_shaven": [
+     0,
+     1,
+     14
+    ]
+   },
+   "variants": {
+    "0": {
+     "tags": [],
+     "description": ""
+    },
+    "1": {
+     "tags": [],
+     "description": ""
+    },
+    "2": {
+     "tags": [
+      "beard",
+      "bearded"
+     ],
+     "description": "beard, bearded"
+    },
+    "3": {
+     "tags": [
+      "beard",
+      "bearded"
+     ],
+     "description": "beard, bearded"
+    },
+    "4": {
+     "tags": [
+      "goatee"
+     ],
+     "description": "goatee"
+    },
+    "5": {
+     "tags": [
+      "mustache",
+      "moustache"
+     ],
+     "description": "mustache, moustache"
+    },
+    "6": {
+     "tags": [
+      "mustache",
+      "moustache"
+     ],
+     "description": "mustache, moustache"
+    },
+    "7": {
+     "tags": [
+      "goatee"
+     ],
+     "description": "goatee"
+    },
+    "8": {
+     "tags": [
+      "beard",
+      "bearded"
+     ],
+     "description": "beard, bearded"
+    },
+    "9": {
+     "tags": [
+      "beard",
+      "bearded"
+     ],
+     "description": "beard, bearded"
+    },
+    "10": {
+     "tags": [
+      "beard",
+      "bearded"
+     ],
+     "description": "beard, bearded"
+    },
+    "11": {
+     "tags": [
+      "beard",
+      "bearded"
+     ],
+     "description": "beard, bearded"
+    },
+    "12": {
+     "tags": [],
+     "description": ""
+    },
+    "13": {
+     "tags": [],
+     "description": ""
+    },
+    "14": {
+     "tags": [],
+     "description": ""
+    }
+   }
+  },
+  "face_color": {
+   "label": "Skin tone",
+   "n_variants": 11,
+   "index": {
+    "dark": [
+     0,
+     1,
+     2
+    ],
+    "deep": [
+     0,
+     1
+    ],
+    "brown": [
+     3,
+     4,
+     5
+    ],
+    "tan": [
+     5,
+     6,
+     7
+    ],
+    "tanned": [
+     5,
+     6,
+     7
+    ],
+    "olive": [
+     5,
+     6
+    ],
+    "medium": [
+     5,
+     6,
+     7
+    ],
+    "light": [
+     8,
+     9,
+     10
+    ],
+    "fair": [
+     9,
+     10
+    ],
+    "pale": [
+     10
+    ]
+   },
+   "special": {},
+   "variants": {
+    "0": {
+     "tags": [
+      "dark",
+      "deep"
+     ],
+     "description": "dark, deep"
+    },
+    "1": {
+     "tags": [
+      "dark",
+      "deep"
+     ],
+     "description": "dark, deep"
+    },
+    "2": {
+     "tags": [
+      "dark"
+     ],
+     "description": "dark"
+    },
+    "3": {
+     "tags": [
+      "brown"
+     ],
+     "description": "brown"
+    },
+    "4": {
+     "tags": [
+      "brown"
+     ],
+     "description": "brown"
+    },
+    "5": {
+     "tags": [
+      "brown",
+      "tan",
+      "tanned",
+      "olive",
+      "medium"
+     ],
+     "description": "brown, tan, tanned, olive, medium"
+    },
+    "6": {
+     "tags": [
+      "tan",
+      "tanned",
+      "olive",
+      "medium"
+     ],
+     "description": "tan, tanned, olive, medium"
+    },
+    "7": {
+     "tags": [
+      "tan",
+      "tanned",
+      "medium"
+     ],
+     "description": "tan, tanned, medium"
+    },
+    "8": {
+     "tags": [
+      "light"
+     ],
+     "description": "light"
+    },
+    "9": {
+     "tags": [
+      "light",
+      "fair"
+     ],
+     "description": "light, fair"
+    },
+    "10": {
+     "tags": [
+      "light",
+      "fair",
+      "pale"
+     ],
+     "description": "light, fair, pale"
+    }
+   }
+  },
+  "face_shape": {
+   "label": "Face shape",
+   "n_variants": 7,
+   "index": {},
+   "special": {},
+   "variants": {
+    "0": {
+     "tags": [],
+     "description": ""
+    },
+    "1": {
+     "tags": [],
+     "description": ""
+    },
+    "2": {
+     "tags": [],
+     "description": ""
+    },
+    "3": {
+     "tags": [],
+     "description": ""
+    },
+    "4": {
+     "tags": [],
+     "description": ""
+    },
+    "5": {
+     "tags": [],
+     "description": ""
+    },
+    "6": {
+     "tags": [],
+     "description": ""
+    }
+   }
+  },
+  "eye_color": {
+   "label": "Eye colour",
+   "n_variants": 5,
+   "index": {},
+   "special": {},
+   "variants": {
+    "0": {
+     "tags": [],
+     "description": ""
+    },
+    "1": {
+     "tags": [],
+     "description": ""
+    },
+    "2": {
+     "tags": [],
+     "description": ""
+    },
+    "3": {
+     "tags": [],
+     "description": ""
+    },
+    "4": {
+     "tags": [],
+     "description": ""
+    }
+   }
+  }
+ }
+}
