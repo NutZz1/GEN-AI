@@ -88,7 +88,7 @@ def judge_features(clf, X):
     for i in range(0, len(X), 256):
         x = X[i:i + 256]
         x = F.interpolate(x, size=64, mode="area") if x.shape[-1] != 64 else x
-        out.append(body(x).mean((2, 3)).double().cpu())
+        out.append(body(x).mean((2, 3)).cpu().double())  # .cpu() first: MPS doesn't support float64
     return torch.cat(out).numpy()
 
 

@@ -1,0 +1,65 @@
+{
+ "model": "vae128.pt",
+ "llm_backend": "none",
+ "llm_available": false,
+ "max_retries": 3,
+ "n_test_prompts": 30,
+ "parser_accuracy": {
+  "rule_based": {
+   "label": "rule_based",
+   "overall": {
+    "precision": 0.9666666666666667,
+    "recall": 0.9666666666666667,
+    "exact_match": 0.95
+   },
+   "by_category": {
+    "compositional": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "exact_match": 1.0
+    },
+    "code_mixed": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "exact_match": 0.875
+    },
+    "negation": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "exact_match": 1.0
+    },
+    "blend_edit": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "exact_match": 1.0
+    },
+    "easy": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "exact_match": 1.0
+    },
+    "vague": {
+     "precision": 0.0,
+     "recall": 0.0,
+     "exact_match": 0.0
+    }
+   },
+   "mean_latency_s": 1.0474522908528645e-05,
+   "fallback_rate": 1.0,
+   "n": 30
+  },
+  "llm_note": "no LLM backend configured (ANTHROPIC_API_KEY unset) - only the rule-based parser ran in this evaluation. Set the key and re-run for the LLM-vs-rule comparison."
+ },
+ "trait_satisfaction": {
+  "before_self_correct": 0.7692307692307693,
+  "after_self_correct": 0.8846153846153846,
+  "mean_retries": 0.5,
+  "n_scored": 26
+ },
+ "n_failures_after_self_correct": 3,
+ "agent_realism_vs_real": {
+  "fid_style_agent_vs_real": 45.05635397450172,
+  "n_real": 1000,
+  "n_agent": 52
+ }
+}
