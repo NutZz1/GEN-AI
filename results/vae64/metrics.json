@@ -1,0 +1,247 @@
+{
+ "model": "vae64.pt",
+ "img_size": 64,
+ "latent_dim": 128,
+ "test_bce_per_image": 2360.488525390625,
+ "test_kl_per_image": 38.689605712890625,
+ "test_recon_mse": 0.002138950861990452,
+ "test_recon_psnr_db": 26.944299697875977,
+ "active_latent_dims": 127,
+ "lda_variant_inference_acc_test": {
+  "hair": 0.864,
+  "hair_color": 0.949,
+  "face_shape": 0.763,
+  "face_color": 0.891,
+  "glasses": 0.75,
+  "facial_hair": 0.759,
+  "eye_color": 0.568
+ },
+ "classifier_acc_real_test": {
+  "glasses": 0.9980000257492065,
+  "hair_color": 0.9850000143051147,
+  "face_color": 1.0,
+  "facial_hair": 0.9919999837875366,
+  "hair": 1.0,
+  "face_shape": 0.9950000047683716,
+  "eye_color": 0.8579999804496765
+ },
+ "classifier_acc_vae_recon": {
+  "glasses": 0.5979999899864197,
+  "hair_color": 0.8569999933242798,
+  "face_color": 0.6079999804496765,
+  "facial_hair": 0.1940000057220459,
+  "hair": 0.6359999775886536,
+  "face_shape": 0.5199999809265137,
+  "eye_color": 0.5550000071525574
+ },
+ "whole_blend_attribute_transfer": {
+  "0.75": {
+   "glasses": {
+    "matches_A": 0.43317973613739014,
+    "matches_B": 0.19585253298282623,
+    "confidence_latent": 0.8343210816383362,
+    "confidence_pixel": 0.903151273727417
+   },
+   "hair_color": {
+    "matches_A": 0.5246800780296326,
+    "matches_B": 0.06946983188390732,
+    "confidence_latent": 0.8451420068740845,
+    "confidence_pixel": 0.8902837038040161
+   },
+   "face_color": {
+    "matches_A": 0.2867383658885956,
+    "matches_B": 0.06810035556554794,
+    "confidence_latent": 0.8853963017463684,
+    "confidence_pixel": 0.8815423846244812
+   },
+   "facial_hair": {
+    "matches_A": 0.1650717705488205,
+    "matches_B": 0.04545454680919647,
+    "confidence_latent": 0.8815507292747498,
+    "confidence_pixel": 0.8583458662033081
+   },
+   "hair": {
+    "matches_A": 0.560606062412262,
+    "matches_B": 0.0,
+    "confidence_latent": 0.7477900981903076,
+    "confidence_pixel": 0.7622410655021667
+   },
+   "face_shape": {
+    "matches_A": 0.431640625,
+    "matches_B": 0.0859375,
+    "confidence_latent": 0.8137290477752686,
+    "confidence_pixel": 0.9397401213645935
+   },
+   "eye_color": {
+    "matches_A": 0.3987603187561035,
+    "matches_B": 0.15495868027210236,
+    "confidence_latent": 0.7728131413459778,
+    "confidence_pixel": 0.887552797794342
+   }
+  },
+  "0.5": {
+   "glasses": {
+    "matches_A": 0.3110599219799042,
+    "matches_B": 0.29032257199287415,
+    "confidence_latent": 0.8458150029182434,
+    "confidence_pixel": 0.8433325290679932
+   },
+   "hair_color": {
+    "matches_A": 0.19926874339580536,
+    "matches_B": 0.18098720908164978,
+    "confidence_latent": 0.8506889939308167,
+    "confidence_pixel": 0.8522915840148926
+   },
+   "face_color": {
+    "matches_A": 0.10931899398565292,
+    "matches_B": 0.11648745834827423,
+    "confidence_latent": 0.8973761796951294,
+    "confidence_pixel": 0.8312823176383972
+   },
+   "facial_hair": {
+    "matches_A": 0.0717703327536583,
+    "matches_B": 0.07416267693042755,
+    "confidence_latent": 0.8807751536369324,
+    "confidence_pixel": 0.8031830191612244
+   },
+   "hair": {
+    "matches_A": 0.08249158412218094,
+    "matches_B": 0.0791245773434639,
+    "confidence_latent": 0.5385909080505371,
+    "confidence_pixel": 0.64239102602005
+   },
+   "face_shape": {
+    "matches_A": 0.267578125,
+    "matches_B": 0.2109375,
+    "confidence_latent": 0.8121359944343567,
+    "confidence_pixel": 0.843927800655365
+   },
+   "eye_color": {
+    "matches_A": 0.2376033067703247,
+    "matches_B": 0.24380165338516235,
+    "confidence_latent": 0.7773300409317017,
+    "confidence_pixel": 0.8366358876228333
+   }
+  },
+  "0.25": {
+   "glasses": {
+    "matches_A": 0.18433180451393127,
+    "matches_B": 0.4124423861503601,
+    "confidence_latent": 0.8388305902481079,
+    "confidence_pixel": 0.9057456254959106
+   },
+   "hair_color": {
+    "matches_A": 0.053016453981399536,
+    "matches_B": 0.513711154460907,
+    "confidence_latent": 0.8513791561126709,
+    "confidence_pixel": 0.874503493309021
+   },
+   "face_color": {
+    "matches_A": 0.06630824506282806,
+    "matches_B": 0.26523298025131226,
+    "confidence_latent": 0.8896704912185669,
+    "confidence_pixel": 0.8985726833343506
+   },
+   "facial_hair": {
+    "matches_A": 0.04545454680919647,
+    "matches_B": 0.1650717705488205,
+    "confidence_latent": 0.8844234347343445,
+    "confidence_pixel": 0.8450745940208435
+   },
+   "hair": {
+    "matches_A": 0.003367003286257386,
+    "matches_B": 0.5084174871444702,
+    "confidence_latent": 0.7279804944992065,
+    "confidence_pixel": 0.7543318271636963
+   },
+   "face_shape": {
+    "matches_A": 0.154296875,
+    "matches_B": 0.375,
+    "confidence_latent": 0.8064761161804199,
+    "confidence_pixel": 0.950431227684021
+   },
+   "eye_color": {
+    "matches_A": 0.14669421315193176,
+    "matches_B": 0.41735535860061646,
+    "confidence_latent": 0.7618114352226257,
+    "confidence_pixel": 0.8948840498924255
+   }
+  }
+ },
+ "trait_selective_swap": {
+  "glasses": {
+   "swapped_trait_matches_donor_A": 0.3663594424724579,
+   "other_traits_keep_B": 0.5463888968030611
+  },
+  "hair_color": {
+   "swapped_trait_matches_donor_A": 0.7879341840744019,
+   "other_traits_keep_B": 0.4999999975164731
+  },
+  "face_color": {
+   "swapped_trait_matches_donor_A": 0.5358422994613647,
+   "other_traits_keep_B": 0.5336111063758532
+  },
+  "facial_hair": {
+   "swapped_trait_matches_donor_A": 0.1866028755903244,
+   "other_traits_keep_B": 0.6213888823986053
+  },
+  "hair": {
+   "swapped_trait_matches_donor_A": 0.5858585834503174,
+   "other_traits_keep_B": 0.49388889720042545
+  },
+  "face_shape": {
+   "swapped_trait_matches_donor_A": 0.390625,
+   "other_traits_keep_B": 0.5683333352208138
+  },
+  "eye_color": {
+   "swapped_trait_matches_donor_A": 0.42148759961128235,
+   "other_traits_keep_B": 0.5619444449742635
+  }
+ },
+ "recon_B_accuracy_reference": {
+  "glasses": 0.5983333587646484,
+  "hair_color": 0.8700000047683716,
+  "face_color": 0.574999988079071,
+  "facial_hair": 0.19333332777023315,
+  "hair": 0.6349999904632568,
+  "face_shape": 0.5233333110809326,
+  "eye_color": 0.5816666483879089
+ },
+ "attribute_editing": {
+  "glasses": {
+   "hit_target_variant": 0.30000001192092896,
+   "chance": 0.08333333333333333,
+   "other_traits_preserved": 0.5311111137270927
+  },
+  "hair_color": {
+   "hit_target_variant": 0.8366666436195374,
+   "chance": 0.1,
+   "other_traits_preserved": 0.5177777782082558
+  },
+  "face_color": {
+   "hit_target_variant": 0.5566666722297668,
+   "chance": 0.09090909090909091,
+   "other_traits_preserved": 0.5272222260634104
+  },
+  "facial_hair": {
+   "hit_target_variant": 0.28333333134651184,
+   "chance": 0.06666666666666667,
+   "other_traits_preserved": 0.6077777743339539
+  },
+  "hair": {
+   "hit_target_variant": 0.5266666412353516,
+   "chance": 0.009009009009009009,
+   "other_traits_preserved": 0.4838888769348462
+  },
+  "face_shape": {
+   "hit_target_variant": 0.44999998807907104,
+   "chance": 0.14285714285714285,
+   "other_traits_preserved": 0.5716666678587595
+  },
+  "eye_color": {
+   "hit_target_variant": 0.44999998807907104,
+   "chance": 0.2,
+   "other_traits_preserved": 0.5705555578072866
+  }
+ }
+}

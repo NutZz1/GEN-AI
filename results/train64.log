@@ -1,0 +1,44 @@
+device: cpu (this PyTorch build is CPU-only, see README for GPU setup)
+64px  train=8000 val=1000 test=1000
+VAE params: 2.96M
+ep   1 | train   4403.1 (bce   4377.9 kl  125.7 perc  0.000) | val   3241.8 (bce   3110.3 kl  131.5) |  14.3s
+ep   2 | train   2945.9 (bce   2905.5 kl  101.0 perc  0.000) | val   2856.5 (bce   2756.5 kl  100.1) |  16.0s
+ep   3 | train   2734.7 (bce   2682.7 kl   86.6 perc  0.000) | val   2714.8 (bce   2638.2 kl   76.6) |  14.3s
+ep   4 | train   2657.6 (bce   2598.7 kl   73.7 perc  0.000) | val   2628.5 (bce   2558.6 kl   69.9) |  14.3s
+ep   5 | train   2610.3 (bce   2548.2 kl   62.1 perc  0.000) | val   2591.6 (bce   2534.7 kl   56.9) |  14.5s
+ep   6 | train   2576.0 (bce   2517.2 kl   58.8 perc  0.000) | val   2560.1 (bce   2505.6 kl   54.5) |  13.8s
+ep   7 | train   2542.9 (bce   2488.3 kl   54.6 perc  0.000) | val   2522.4 (bce   2470.0 kl   52.4) |  13.5s
+ep   8 | train   2525.4 (bce   2472.4 kl   53.0 perc  0.000) | val   2525.7 (bce   2470.1 kl   55.6) |  12.9s
+ep   9 | train   2508.4 (bce   2457.2 kl   51.2 perc  0.000) | val   2489.9 (bce   2442.4 kl   47.5) |  12.6s
+ep  10 | train   2493.3 (bce   2444.6 kl   48.7 perc  0.000) | val   2485.6 (bce   2437.8 kl   47.8) |  13.0s
+ep  11 | train   2481.7 (bce   2434.0 kl   47.7 perc  0.000) | val   2465.9 (bce   2420.2 kl   45.7) |  13.3s
+ep  12 | train   2471.1 (bce   2425.0 kl   46.1 perc  0.000) | val   2461.5 (bce   2417.2 kl   44.3) |  13.0s
+ep  13 | train   2466.0 (bce   2420.6 kl   45.3 perc  0.000) | val   2457.4 (bce   2412.2 kl   45.2) |  14.9s
+ep  14 | train   2461.7 (bce   2416.7 kl   45.1 perc  0.000) | val   2446.6 (bce   2404.0 kl   42.7) |  15.9s
+ep  15 | train   2453.2 (bce   2409.4 kl   43.8 perc  0.000) | val   2441.1 (bce   2396.7 kl   44.4) |  13.6s
+ep  16 | train   2446.3 (bce   2403.1 kl   43.1 perc  0.000) | val   2437.0 (bce   2396.1 kl   41.0) |  12.8s
+ep  17 | train   2442.8 (bce   2400.0 kl   42.8 perc  0.000) | val   2430.8 (bce   2386.3 kl   44.5) |  13.2s
+ep  18 | train   2436.7 (bce   2394.6 kl   42.1 perc  0.000) | val   2433.4 (bce   2391.9 kl   41.5) |  14.6s
+ep  19 | train   2434.3 (bce   2392.7 kl   41.6 perc  0.000) | val   2425.8 (bce   2385.4 kl   40.4) |  13.2s
+ep  20 | train   2430.7 (bce   2389.4 kl   41.3 perc  0.000) | val   2425.9 (bce   2384.3 kl   41.6) |  13.8s
+ep  21 | train   2429.1 (bce   2387.7 kl   41.3 perc  0.000) | val   2419.9 (bce   2379.5 kl   40.3) |  13.7s
+ep  22 | train   2425.2 (bce   2384.5 kl   40.8 perc  0.000) | val   2415.8 (bce   2375.2 kl   40.7) |  13.4s
+ep  23 | train   2423.6 (bce   2383.0 kl   40.6 perc  0.000) | val   2414.8 (bce   2375.0 kl   39.8) |  13.4s
+ep  24 | train   2422.5 (bce   2382.0 kl   40.5 perc  0.000) | val   2413.6 (bce   2372.1 kl   41.5) |  13.4s
+ep  25 | train   2418.5 (bce   2378.3 kl   40.2 perc  0.000) | val   2413.7 (bce   2375.0 kl   38.7) |  13.8s
+ep  26 | train   2417.8 (bce   2377.9 kl   40.0 perc  0.000) | val   2409.2 (bce   2369.4 kl   39.8) |  13.4s
+ep  27 | train   2414.7 (bce   2374.8 kl   39.9 perc  0.000) | val   2405.1 (bce   2365.4 kl   39.6) |  13.5s
+ep  28 | train   2412.9 (bce   2373.2 kl   39.7 perc  0.000) | val   2407.3 (bce   2368.2 kl   39.1) |  13.4s
+ep  29 | train   2411.9 (bce   2372.4 kl   39.5 perc  0.000) | val   2403.5 (bce   2364.3 kl   39.2) |  13.3s
+ep  30 | train   2410.4 (bce   2371.1 kl   39.3 perc  0.000) | val   2402.5 (bce   2362.8 kl   39.7) |  13.5s
+ep  31 | train   2409.8 (bce   2370.4 kl   39.4 perc  0.000) | val   2403.0 (bce   2363.6 kl   39.4) |  13.7s
+ep  32 | train   2409.1 (bce   2369.8 kl   39.3 perc  0.000) | val   2401.2 (bce   2362.2 kl   39.0) |  13.3s
+ep  33 | train   2408.5 (bce   2369.3 kl   39.3 perc  0.000) | val   2399.6 (bce   2360.2 kl   39.4) |  13.5s
+ep  34 | train   2407.9 (bce   2368.8 kl   39.2 perc  0.000) | val   2399.3 (bce   2360.2 kl   39.1) |  13.5s
+ep  35 | train   2406.7 (bce   2367.6 kl   39.1 perc  0.000) | val   2398.8 (bce   2360.1 kl   38.6) |  13.5s
+ep  36 | train   2406.8 (bce   2367.7 kl   39.2 perc  0.000) | val   2398.2 (bce   2359.2 kl   39.0) |  13.6s
+ep  37 | train   2405.5 (bce   2366.4 kl   39.1 perc  0.000) | val   2397.8 (bce   2358.9 kl   38.9) |  13.6s
+ep  38 | train   2405.6 (bce   2366.7 kl   38.9 perc  0.000) | val   2397.7 (bce   2358.9 kl   38.8) |  13.7s
+ep  39 | train   2405.4 (bce   2366.4 kl   39.0 perc  0.000) | val   2397.6 (bce   2359.0 kl   38.6) |  13.8s
+ep  40 | train   2405.9 (bce   2366.9 kl   39.0 perc  0.000) | val   2397.6 (bce   2358.7 kl   38.9) |  14.0s
+best val loss 2397.6 -> C:\Users\sreep\OneDrive\Desktop\GEN-AI\checkpoints\vae64.pt

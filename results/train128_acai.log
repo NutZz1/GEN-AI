@@ -1,0 +1,13 @@
+device: cuda (NVIDIA GeForce RTX 4060 Laptop GPU)
+128px  train=8000 val=1000 test=1000
+initialised from checkpoints/vae128.pt
+VAE params: 11.88M  + VGG16 perceptual x500.0  + ACAI critic x10000.0
+ep   1 | train  11347.1 (bce   8856.6 kl  287.4 perc  4.063 adv 0.0172 critic 0.0491) | val  10625.8 (bce   8729.7 kl  231.6) |  90.7s
+ep   2 | train  10964.3 (bce   8780.5 kl  235.6 perc  3.413 adv 0.0242 critic 0.0402) | val  10962.8 (bce   8792.6 kl  237.9) |  37.0s
+ep   3 | train  11093.3 (bce   8796.3 kl  242.0 perc  3.644 adv 0.0233 critic 0.0407) | val  10984.3 (bce   8778.6 kl  249.5) |  37.9s
+ep   4 | train  11105.0 (bce   8798.4 kl  241.4 perc  3.679 adv 0.0226 critic 0.0412) | val  10988.8 (bce   8781.4 kl  238.5) |  40.6s
+ep   5 | train  11116.2 (bce   8791.9 kl  244.1 perc  3.690 adv 0.0235 critic 0.0401) | val  10988.7 (bce   8775.2 kl  253.3) |  37.2s
+ep   6 | train  11123.1 (bce   8789.6 kl  244.1 perc  3.688 adv 0.0245 critic 0.0390) | val  11042.4 (bce   8779.8 kl  251.8) |  36.8s
+ep   7 | train  11172.9 (bce   8791.1 kl  245.8 perc  3.753 adv 0.0259 critic 0.0386) | val  10965.5 (bce   8766.7 kl  244.1) |  37.0s
+ep   8 | train  11190.5 (bce   8790.1 kl  245.1 perc  3.760 adv 0.0275 critic 0.0358) | val  10977.0 (bce   8774.8 kl  235.4) |  36.6s
+ep   9 | train  11212.0 (bce   8787.8 kl  243.4 perc  3.772 adv 0.0295 critic 0.0338) | val  11050.5 (bce   8776.6 kl  241.1) |  38.5s

@@ -1,0 +1,54 @@
+device: cuda (NVIDIA GeForce RTX 4060 Laptop GPU)
+128px  train=8000 val=1000 test=1000
+VAE params: 11.88M  + VGG16 perceptual loss x500.0
+ep   1 | train  39956.7 (bce  17026.9 kl 39736.9 perc 29.965) | val  25288.5 (bce  12465.9 kl 1009.2) |  53.5s
+ep   2 | train  22475.8 (bce  11662.4 kl  960.3 perc 20.859) | val  21821.7 (bce  11246.4 kl  796.6) |  32.1s
+ep   3 | train  19673.3 (bce  10548.0 kl  767.5 perc 17.330) | val  18692.3 (bce  10119.4 kl  717.8) |  29.1s
+ep   4 | train  17884.6 (bce  10021.9 kl  652.7 perc 14.681) | val  17009.9 (bce   9803.8 kl  514.8) |  29.0s
+ep   5 | train  16514.0 (bce   9691.0 kl  473.5 perc 12.699) | val  16189.7 (bce   9595.2 kl  453.8) |  28.9s
+ep   6 | train  15648.9 (bce   9510.0 kl  433.4 perc 11.411) | val  15170.4 (bce   9390.7 kl  354.1) |  32.8s
+ep   7 | train  14977.4 (bce   9402.6 kl  383.9 perc 10.382) | val  15047.0 (bce   9423.8 kl  391.0) | 105.7s
+ep   8 | train  14529.2 (bce   9327.6 kl  396.6 perc  9.610) | val  14363.5 (bce   9361.9 kl  358.4) | 105.2s
+ep   9 | train  14042.8 (bce   9258.6 kl  381.9 perc  8.805) | val  13820.7 (bce   9208.2 kl  326.2) | 105.4s
+ep  10 | train  13682.8 (bce   9210.0 kl  362.9 perc  8.220) | val  13392.2 (bce   9117.8 kl  339.9) | 105.3s
+ep  11 | train  13309.2 (bce   9157.7 kl  340.4 perc  7.622) | val  13067.5 (bce   9084.6 kl  304.4) | 105.2s
+ep  12 | train  13017.5 (bce   9117.2 kl  322.8 perc  7.155) | val  13110.9 (bce   9144.5 kl  323.3) | 105.3s
+ep  13 | train  12760.1 (bce   9075.5 kl  313.3 perc  6.743) | val  12691.0 (bce   9048.3 kl  310.4) | 105.2s
+ep  14 | train  12595.3 (bce   9058.8 kl  311.6 perc  6.450) | val  12378.3 (bce   8981.7 kl  291.5) | 105.3s
+ep  15 | train  12382.7 (bce   9025.6 kl  300.8 perc  6.113) | val  12219.5 (bce   8974.7 kl  289.1) | 105.4s
+ep  16 | train  12253.0 (bce   9012.8 kl  298.1 perc  5.884) | val  12167.6 (bce   8951.0 kl  281.9) | 108.7s
+ep  17 | train  12071.5 (bce   8980.9 kl  292.5 perc  5.596) | val  11998.9 (bce   8927.6 kl  291.4) | 123.3s
+ep  18 | train  11931.1 (bce   8961.6 kl  286.1 perc  5.367) | val  11869.6 (bce   8904.3 kl  282.6) | 123.2s
+ep  19 | train  11792.9 (bce   8939.1 kl  282.3 perc  5.143) | val  11736.3 (bce   8910.6 kl  276.8) | 123.3s
+ep  20 | train  11670.6 (bce   8922.1 kl  278.8 perc  4.940) | val  11628.0 (bce   8875.1 kl  281.1) | 123.4s
+ep  21 | train  11595.5 (bce   8907.5 kl  287.3 perc  4.801) | val  11504.6 (bce   8864.3 kl  271.7) | 120.5s
+ep  22 | train  11428.1 (bce   8883.5 kl  268.7 perc  4.552) | val  11377.3 (bce   8843.3 kl  267.9) | 118.1s
+ep  23 | train  11324.6 (bce   8866.1 kl  264.8 perc  4.387) | val  11307.8 (bce   8833.5 kl  259.0) | 118.2s
+ep  24 | train  11240.4 (bce   8856.0 kl  259.5 perc  4.250) | val  11231.1 (bce   8829.7 kl  260.9) | 118.0s
+ep  25 | train  11166.8 (bce   8845.4 kl  256.7 perc  4.129) | val  11166.4 (bce   8813.5 kl  251.9) | 118.1s
+ep  26 | train  11084.6 (bce   8832.0 kl  252.0 perc  4.001) | val  11130.3 (bce   8812.0 kl  258.4) | 118.1s
+ep  27 | train  11010.3 (bce   8821.9 kl  247.3 perc  3.882) | val  10988.0 (bce   8782.7 kl  240.2) | 118.1s
+ep  28 | train  10941.6 (bce   8813.7 kl  243.4 perc  3.769) | val  10956.4 (bce   8782.0 kl  245.3) | 118.1s
+ep  29 | train  10884.4 (bce   8803.4 kl  242.4 perc  3.677) | val  10899.9 (bce   8768.5 kl  242.9) | 118.6s
+ep  30 | train  10821.5 (bce   8795.5 kl  236.8 perc  3.578) | val  10836.3 (bce   8777.7 kl  234.0) | 118.4s
+ep  31 | train  10769.1 (bce   8789.0 kl  234.5 perc  3.491) | val  10823.3 (bce   8752.2 kl  235.9) | 119.0s
+ep  32 | train  10720.9 (bce   8780.2 kl  232.7 perc  3.416) | val  10721.1 (bce   8744.8 kl  233.9) | 118.7s
+ep  33 | train  10673.1 (bce   8773.9 kl  228.8 perc  3.341) | val  10732.0 (bce   8757.8 kl  228.0) | 118.6s
+ep  34 | train  10630.2 (bce   8766.3 kl  225.5 perc  3.277) | val  10645.7 (bce   8730.0 kl  227.3) | 118.6s
+ep  35 | train  10592.1 (bce   8762.8 kl  223.8 perc  3.211) | val  10595.1 (bce   8723.5 kl  220.9) | 118.5s
+ep  36 | train  10557.8 (bce   8756.7 kl  222.2 perc  3.158) | val  10608.9 (bce   8727.0 kl  222.1) | 119.4s
+ep  37 | train  10519.9 (bce   8751.1 kl  219.6 perc  3.098) | val  10579.3 (bce   8735.1 kl  217.6) | 118.5s
+ep  38 | train  10504.1 (bce   8752.4 kl  217.8 perc  3.068) | val  10555.1 (bce   8731.9 kl  220.9) | 118.5s
+ep  39 | train  10471.3 (bce   8746.5 kl  216.3 perc  3.017) | val  10517.2 (bce   8715.1 kl  216.8) | 118.7s
+ep  40 | train  10449.7 (bce   8742.7 kl  214.9 perc  2.984) | val  10490.7 (bce   8715.1 kl  214.2) | 118.6s
+ep  41 | train  10420.8 (bce   8737.8 kl  213.7 perc  2.939) | val  10456.3 (bce   8707.9 kl  212.2) | 118.8s
+ep  42 | train  10403.9 (bce   8736.2 kl  212.1 perc  2.911) | val  10461.5 (bce   8712.2 kl  210.9) | 118.6s
+ep  43 | train  10388.1 (bce   8733.2 kl  211.6 perc  2.887) | val  10438.6 (bce   8706.6 kl  207.7) | 118.6s
+ep  44 | train  10371.5 (bce   8730.7 kl  210.8 perc  2.860) | val  10418.5 (bce   8701.6 kl  211.1) | 118.6s
+ep  45 | train  10362.4 (bce   8730.2 kl  209.8 perc  2.845) | val  10409.7 (bce   8702.4 kl  208.7) | 118.5s
+ep  46 | train  10354.9 (bce   8729.8 kl  209.6 perc  2.831) | val  10403.2 (bce   8700.2 kl  207.5) | 118.9s
+ep  47 | train  10345.0 (bce   8727.5 kl  209.3 perc  2.816) | val  10396.1 (bce   8698.0 kl  208.3) | 118.4s
+ep  48 | train  10340.6 (bce   8727.1 kl  208.6 perc  2.810) | val  10392.1 (bce   8698.3 kl  207.8) | 118.6s
+ep  49 | train  10332.5 (bce   8725.7 kl  208.5 perc  2.797) | val  10391.5 (bce   8697.9 kl  207.8) | 118.6s
+ep  50 | train  10337.7 (bce   8727.9 kl  208.5 perc  2.803) | val  10391.6 (bce   8699.4 kl  207.4) | 118.5s
+best val loss 10391.5 -> /mnt/c/Users/sreep/OneDrive/Desktop/GEN-AI/checkpoints/vae128.pt
