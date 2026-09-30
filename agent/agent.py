@@ -100,8 +100,50 @@ def verify_avatar(ctx, avatar, constraints):
             for t, ids in constraints.items() if t in predicted}
 
 
+def _validate_tool_call(name, args):
+    """None if `args` matches the tool's schema, else a human-readable reason. Anthropic's API mostly
+    enforces this itself, but smaller local models (Ollama) readily invent argument names outside the
+    schema - this catches that before it reaches the Python function and turns into a bare TypeError."""
+    schema = next((s for s in TOOL_SCHEMAS if s["name"] == name), None)
+    if schema is None:
+        return f"there is no tool named {name!r}"
+    props = schema["input_schema"]["properties"]
+    required = schema["input_schema"].get("required", [])
+    missing = [r for r in required if r not in args]
+    unknown = [k for k in args if k not in props]
+    if missing or unknown:
+        return (f"call to {name!r} is missing required argument(s) {missing} and/or uses unrecognised "
+                f"argument(s) {unknown}; valid arguments are {list(props)}")
+    return None
+
+
+def _coerce_tool_args(name, args):
+    """Some local models serialise object/array/number arguments as JSON strings instead of native
+    JSON (observed with llama3.2 via Ollama: {"constraints": "{\"hair\": [5]}"} instead of a nested
+    object) - decode those against the tool's declared type before they reach the Python function."""
+    schema = next((s for s in TOOL_SCHEMAS if s["name"] == name), None)
+    if schema is None:
+        return args
+    props = schema["input_schema"]["properties"]
+    out = dict(args)
+    for k, v in list(out.items()):
+        want = props.get(k, {}).get("type")
+        if not isinstance(v, str):
+            continue
+        try:
+            if want in ("object", "array"):
+                out[k] = json.loads(v)
+            elif want == "number":
+                out[k] = float(v)
+            elif want == "integer":
+                out[k] = int(v)
+        except (json.JSONDecodeError, ValueError):
+            pass  # leave it as-is; _run_tool's caller will surface whatever error results
+    return out
+
+
 def _run_tool(ctx, call):
-    result = TOOL_IMPLS[call["name"]](ctx, **call["input"])
+    result = TOOL_IMPLS[call["name"]](ctx, **_coerce_tool_args(call["name"], call["input"]))
     if call["name"] == "breed":
         primary = result["children"][0]["avatar"]
         summary = {"children": [{"avatar": c["avatar"], "labels": c["labels"]} for c in result["children"]]}
@@ -121,11 +163,17 @@ def plan_act_verify(ctx, llm, user_text, parse: ParseResult):
     while True:
         if llm.available:
             resp = llm.chat(system=PLANNER_PROMPT_V1, messages=messages, tools=TOOL_SCHEMAS)
-            if resp.tool_calls:
-                call = resp.tool_calls[0]
-                tool_call = {"name": call["name"], "input": call["input"]}
-            else:
-                tool_call = None
+            call = resp.tool_calls[0] if resp.tool_calls else None
+            bad_args = _validate_tool_call(call["name"], call["input"]) if call else None
+            if bad_args:  # one re-ask, same pattern as the parser's validate-then-retry
+                messages.append({"role": "assistant", "content": resp.raw_content})
+                messages.append({"role": "user", "content": [
+                    {"type": "tool_result", "tool_use_id": call["id"], "content": json.dumps({"error": bad_args}),
+                     "is_error": True},
+                    {"type": "text", "text": "Call the tool again with corrected arguments."}]})
+                resp = llm.chat(system=PLANNER_PROMPT_V1, messages=messages, tools=TOOL_SCHEMAS)
+                call = resp.tool_calls[0] if resp.tool_calls else None
+            tool_call = {"name": call["name"], "input": call["input"]} if call else None
         else:
             tool_call = _heuristic_plan(ctx, user_text, parse.constraints) if retries == 0 else None
 
@@ -184,20 +232,33 @@ def generate_verified_candidate(ctx, parse: ParseResult, residual_strength=0.7, 
             "verify": verify, "retries": retries}
 
 
+def generate_candidates_from_parse(ctx, parse: ParseResult, n=4, residual_strength=0.7):
+    """`n` independently-sampled, independently-verified candidates from already-parsed constraints -
+    shared by generate_candidates() (text) and the photo-upload path in app.py (photo2avatar.py)."""
+    return [generate_verified_candidate(ctx, parse, residual_strength, name=f"cand_{len(ctx.avatars) + 1}")
+            for _ in range(n)]
+
+
 def generate_candidates(ctx, llm, user_text, n=4, residual_strength=0.7):
-    """Parse once, then generate `n` independently-sampled, independently-verified candidates - used
-    by the "Describe it" tab's first turn (before the user has picked one to keep editing)."""
+    """Parse once, then generate `n` candidates - used by the "Describe it" tab's first turn (before
+    the user has picked one to keep editing)."""
     parse = parse_request(llm, user_text)
-    candidates = [generate_verified_candidate(ctx, parse, residual_strength, name=f"cand_{len(ctx.avatars) + 1}")
-                  for _ in range(n)]
-    return parse, candidates
+    return parse, generate_candidates_from_parse(ctx, parse, n, residual_strength)
 
 
 def explain(llm, user_text, parse: ParseResult, trace):
     last = trace[-1] if trace else None
-    verify = last.verify if last else None
+    if last is None or "error" in last.result_summary:
+        # A failed/empty trace is not something to hand to an LLM to narrate - asked to explain a
+        # failure with no real result to describe, a model will readily fabricate a success story
+        # (observed with a local model: it claimed "the classifier verified all traits matched" when
+        # no tool had actually run). Be direct instead of risking that.
+        reason = last.result_summary.get("error") if last else "couldn't decide what to do with that request"
+        return (f"Sorry, I couldn't generate that ({reason}). Try rephrasing, or turn off \"Use LLM "
+                f"agent\" in the sidebar to fall back to the rule-based parser.")
+    verify = last.verify
     facts = {"request": user_text, "requested_traits": parse.constraints, "understood": parse.understood,
-             "unknown_words": parse.unknown, "tool_used": last.tool if last else None, "verification": verify}
+             "unknown_words": parse.unknown, "tool_used": last.tool, "verification": verify}
     if llm.available:
         resp = llm.chat(system=EXPLAINER_PROMPT_V1, messages=[{"role": "user", "content": json.dumps(facts)}])
         if not resp.error and resp.text.strip():

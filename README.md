@@ -6,7 +6,7 @@ top as the reasoning/planning/verification front-end (see [Agent architecture](#
 
 | Tab | What it does | How |
 |---|---|---|
-| **Describe it** | chat: describe an avatar in words (English or Tanglish/Manglish), pick a candidate, keep editing it by chatting | LLM agent: parse -> plan+act (VAE tool calls) -> verify (judge classifier) -> self-correct -> explain; falls back to a rule-based parser + heuristic router with no API key |
+| **Describe it** | chat: describe an avatar in words (English or Tanglish/Manglish) *or* upload a photo, pick a candidate, keep editing it by chatting | LLM agent: parse text (or guess traits from a photo via the judge classifier) -> plan+act (VAE tool calls) -> verify (judge classifier) -> self-correct -> explain; falls back to a rule-based parser + heuristic router with no API key |
 | **Blend** | whole-avatar mixes at 75/50/25% + custom ratio, vs naive pixel blend | linear latent interpolation |
 | **Trait Mixer** | hair from A, face shape from B, glasses from A, ... | per-trait latent subspaces (LDA on encoder means, orthogonalised) |
 | **Avatar Editor** | change one trait of any avatar (e.g. hair colour -> variant 3) | latent arithmetic toward the target variant's mean |
@@ -143,7 +143,9 @@ key, is how close that gets to 0% and whether the LLM columns beat the rule-base
 | `agent/schemas.py` | pydantic validation of the parser's JSON output |
 | `agent/tools.py` | LLM tool schemas + implementations, wrapping `traits.py`/`genetics.py`/`text2avatar.py`/the judge classifier |
 | `agent/agent.py` | the parse -> plan+act -> verify -> self-correct -> explain loop; logs to `logs/agent_runs.jsonl` |
-| `tests/` | pytest: ontology/dataset consistency, parser validation, no-API-key fallback, every tool |
+| `judge.py` | shared loader for the independent attribute classifier, used by both `agent/tools.py` (verifying generations) and `photo2avatar.py` (guessing traits from a photo) |
+| `photo2avatar.py` | uploaded photo -> centre-cropped image -> guessed trait constraints (via `judge.py`), fed into the same generate/verify/self-correct pipeline as a text request |
+| `tests/` | pytest: ontology/dataset consistency, parser validation, no-API-key fallback, every tool, photo->constraints |
 
 ## GPU setup (this machine: RTX 4060 Laptop)
 Windows **Smart App Control** blocks the CUDA build of PyTorch's DLLs on this PC
@@ -186,14 +188,15 @@ keyword-based planner, exactly as measured in **Agent results** above.
 python knowledge/build_ontology.py        # regenerate the trait ontology from the curated vocabulary
 python knowledge/build_prompt_testset.py  # regenerate the gold-labelled prompt test set
 python evaluate_agent.py                  # -> results/metrics_agent.json, results/failures.png
-pytest tests/                             # 26 tests: ontology, parser validation, fallback, tools
+pytest tests/                             # 30 tests: ontology, parser validation, fallback, tools, photo upload
 ```
 
 ## Why it matters
 
-- **Privacy-preserving**: an avatar generated from a text description needs no photo of a real face -
-  useful anywhere a profile picture is wanted but a selfie isn't (kids' apps, pseudonymous accounts,
-  placeholder art).
+- **Privacy-preserving by default, photo-optional**: an avatar generated from a text description needs
+  no photo of a real face - useful anywhere a profile picture is wanted but a selfie isn't (kids' apps,
+  pseudonymous accounts, placeholder art). Uploading a photo is opt-in and processed locally only (see
+  Limitations below) - it's a convenience, not a requirement.
 - **Accessible to non-designers**: the original four tabs already made blending/editing possible
   without touching a design tool, but they still require picking through sliders and gallery ids. The
   chat interface lowers that further to "just describe it" - useful for anyone who thinks in words
@@ -224,9 +227,18 @@ pytest tests/                             # 26 tests: ontology, parser validatio
   it reaches the VAE, with one re-ask-and-retry before falling back to the rule-based parser; (3) after
   generation, the independent judge classifier (not the LLM, not the VAE) checks whether the requested
   traits actually appear, and the agent only reports a trait as satisfied if that classifier agrees.
-- **The LLM never sees user photos** - there is no photo upload anywhere in this app; every input to
-  the parser/planner/explainer prompts is text the user typed, and every image the LLM could be said to
-  "see" is one the VAE itself generated from Cartoon Set variant ids, not a real person's face.
+- **The LLM never sees user photos**: uploading a photo (`photo2avatar.py`) only ever reaches the local
+  judge classifier - the photo bytes are processed in memory, never written to disk, and never included
+  in any prompt sent to the LLM. Every input to the parser/planner/explainer prompts is text (the
+  user's own words, or a templated description of the classifier's trait guesses); the LLM never
+  receives image data.
+- **Photo trait-guessing is unverified, not just unmeasured**: the judge classifier that guesses traits
+  from an uploaded photo was trained exclusively on Cartoon Set's cartoon illustrations (`evaluate.py`),
+  never on real human photographs. Its accuracy numbers in `results/` all describe cartoon-image
+  classification. There is no face detector - `photo2avatar.prepare_image` just centre-crops to a
+  square, so an off-centre or non-frontal photo will crop out part of the face before the classifier
+  ever sees it. Treat the resulting avatar as a playful, best-effort starting point, not a validated
+  likeness - this is flagged in the app's own "Or upload a photo" caption, not just here.
 - **Every agent run is logged** (`logs/agent_runs.jsonl`, gitignored) with the prompt, parsed
   constraints, tool calls, and verification result - useful for auditing what the agent actually did,
   but also means that file contains raw user text; it's local-only and never committed.

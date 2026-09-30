@@ -16,6 +16,7 @@ from avatarblend import (decode_np, describe_device, encode_mu, get_device, load
                          model_device, pixel_blend)
 from genetics import GENE_COLORS, Lineage, family_tree_png
 from media import upscale_png_bytes
+import photo2avatar
 from traits import LABELS, TraitSpace, build, traits_path
 
 GALLERY_SIZE = 24
@@ -141,6 +142,47 @@ def tab_describe(client, n_candidates, residual_strength):
             "(*\"make the hair shorter\"*), or use the buttons under it to send it to the other tabs as "
             "a parent, or open it in the Avatar Editor.")
 
+    with st.expander("Or upload a photo"):
+        st.caption(
+            "Best-effort: guesses hairstyle, hair colour, skin tone, glasses, facial hair, face shape "
+            "and eye colour with the same independent classifier the agent uses to verify its own "
+            "generations - which was trained on cartoon avatars, not real photos, so treat this as a "
+            "fun starting point, not an accurate likeness. Works best with a front-facing, centred "
+            "photo (there's no face detector, just a centre-crop). Processed locally only - the photo "
+            "is never saved to disk or sent to an LLM API.")
+        photo = st.file_uploader("Upload a photo", type=["png", "jpg", "jpeg"], key="photo_upload")
+        if photo is not None and st.button("Generate avatar from this photo"):
+            with st.spinner("Cropping photo and guessing traits..."):
+                try:
+                    img = photo2avatar.prepare_image(photo.getvalue(), ctx.model.img_size)
+                    cons, conf = photo2avatar.guess_constraints(ctx.model, img)
+                except Exception as e:
+                    cons, conf, img = None, None, None
+                    st.error(f"Couldn't read that photo ({e}). Try a different file.")
+            if cons is None and img is not None:
+                st.error("No judge classifier checkpoint found (checkpoints/attr_classifier.pt) - "
+                         "can't guess traits from a photo without it. Run evaluate.py once to train it.")
+            elif cons is not None:
+                pc1, pc2 = st.columns(2)
+                pc1.image(big(img, 160), caption="Cropped photo (what the classifier saw)")
+                direct = decode_np(ctx.model, encode_mu(ctx.model, img[None]))[0]
+                pc2.image(big(direct, 160), caption="Direct VAE encode/decode (often distorted - "
+                                                    "the VAE was never trained on real photos)")
+                understood = [f"{LABELS.get(t, t)}: variant {v[0]} ({round(conf[t] * 100)}% confident)"
+                             for t, v in cons.items()]
+                parse = agent_core.ParseResult(constraints=cons, understood=understood, unknown=[], source="photo")
+                with st.spinner("Generating candidates from the guessed traits..."):
+                    candidates = agent_core.generate_candidates_from_parse(ctx, parse, n_candidates,
+                                                                           residual_strength)
+                st.session_state["describe_candidates"] = candidates
+                for c in candidates:
+                    st.session_state["session_gallery"].append({"name": c["name"], "img": c["img"]})
+                st.session_state["describe_messages"].append({"role": "user", "content": "[uploaded a photo]"})
+                st.session_state["describe_messages"].append({"role": "assistant", "content":
+                    f"Guessed from your photo: {', '.join(understood)}. Generated {len(candidates)} "
+                    f"candidates below - pick one to keep going."})
+                st.rerun()
+
     for msg in st.session_state["describe_messages"]:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
@@ -255,7 +297,7 @@ def tab_blend(model, A, B, da, db):
     cols = st.columns(6)
     show(cols[0], A["img"], f"Parent A - {da}")
     for j, (a, h) in enumerate(zip(alphas, hybrids)):
-        show(cols[j + 1], h, f"{round(a * 100)}% A / {round((1 - a) * 100)}% B", f"blend_{round(a * 100)}A")
+        show(cols[j + 1], h, f"{round(a * 100)}% A / {round((1 - a) * 100)}% B", f"blend_{j}_{round(a * 100)}A")
     show(cols[5], B["img"], f"Parent B - {db}")
     if show_pixel:
         st.caption("Naive pixel alpha-blend at the same ratios (note the ghosting):")

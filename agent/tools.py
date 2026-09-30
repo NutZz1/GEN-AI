@@ -6,7 +6,6 @@ every tool delegates to avatarblend.py / traits.py / genetics.py / text2avatar.p
 import numpy as np
 
 import text2avatar as t2a
-from evaluate import TRAITS as JUDGE_TRAITS
 from genetics import Lineage
 from traits import TRAITS as TRAIT_NAMES
 
@@ -116,47 +115,15 @@ def breed(ctx, avatar_a, avatar_b, n=6, noise=0.3, blend_prob=0.2, point_mutatio
     return {"children": children}
 
 
-_JUDGE = {}  # lazy-loaded classifier, keyed by img_size (see classify_avatar)
-
-
-def _judge_classifier(model):
-    import torch
-
-    from avatarblend import CKPT_DIR
-    from avatarblend import model_device as _dev
-    from evaluate import AttrClassifier
-    size = model.img_size
-    if size not in _JUDGE:
-        path = CKPT_DIR / "attr_classifier.pt"
-        if not path.exists():
-            return None
-        # n_classes must match how the checkpoint was trained (see evaluate.py TRAITS order + data attrs)
-        from avatarblend import load_dataset
-        data = load_dataset(size)
-        names = list(data["attr_names"])
-        n_classes = [int(data["attr_nvariants"][names.index(t)]) for t in JUDGE_TRAITS]
-        clf = AttrClassifier(n_classes).to(_dev(model))
-        clf.load_state_dict(torch.load(path, map_location=_dev(model)))
-        clf.eval()
-        _JUDGE[size] = clf
-    return _JUDGE[size]
-
-
 def classify_avatar(ctx, avatar):
     """Independent-classifier prediction for each judge trait -> {trait: predicted_variant_id}.
     Returns None (not {}) if no classifier checkpoint exists, so callers can skip verification cleanly."""
-    import torch
-    import torch.nn.functional as F
-
-    from avatarblend import model_device, to_tensor
-    clf = _judge_classifier(ctx.model)
+    from judge import load_classifier, predict_traits
+    clf = load_classifier(ctx.model)
     if clf is None:
         return None
-    img = ctx.get(avatar)["img"]
-    x = to_tensor(img[None]).to(model_device(ctx.model))
-    with torch.no_grad():
-        preds = [F.softmax(o, 1)[0] for o in clf(x)]
-    return {t: int(p.argmax().item()) for t, p in zip(JUDGE_TRAITS, preds)}
+    labels, _ = predict_traits(clf, ctx.model, ctx.get(avatar)["img"])
+    return labels
 
 
 TOOL_IMPLS = {"generate_from_constraints": generate_from_constraints, "blend": blend, "trait_mix": trait_mix,

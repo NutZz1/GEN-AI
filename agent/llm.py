@@ -86,17 +86,22 @@ class OllamaClient(LLMClient):
 
 
 def get_client() -> LLMClient:
-    """Build the configured backend; never raises - returns an unavailable LLMClient on any failure."""
+    """Build the configured backend; never raises - returns an unavailable LLMClient on any failure.
+    Reads AVATARBLEND_LLM_PROVIDER from the environment directly (not the cached config.PROVIDER),
+    so changing it at runtime (env var, monkeypatch in tests, .env edit + reload) takes effect."""
     import os
-    provider = config.PROVIDER
+    provider = os.environ.get("AVATARBLEND_LLM_PROVIDER", "anthropic")
     try:
         if provider == "anthropic":
             key = os.environ.get("ANTHROPIC_API_KEY")
             if not key:
                 return LLMClient()
-            return AnthropicClient(key, config.ANTHROPIC_MODEL)
+            model = os.environ.get("AVATARBLEND_AGENT_MODEL", config.ANTHROPIC_MODEL)
+            return AnthropicClient(key, model)
         if provider == "ollama":
-            return OllamaClient(config.OLLAMA_MODEL, config.OLLAMA_HOST)
+            model = os.environ.get("AVATARBLEND_OLLAMA_MODEL", config.OLLAMA_MODEL)
+            host = os.environ.get("OLLAMA_HOST", config.OLLAMA_HOST)
+            return OllamaClient(model, host)
     except Exception:
         return LLMClient()
     return LLMClient()
