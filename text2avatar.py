@@ -1,59 +1,31 @@
 """Text -> avatar: a small rule-based parser from a description to trait variants.
 
-Cartoon Set only numbers its variants, so the vocabulary below was built by inspecting example sheets
-of every variant (hairstyles, hair colours, glasses shapes/colours, facial hair) and by measurements:
-skin-tone variants are ordered dark -> light by cheek-pixel luminance, and the "sunglasses" shapes are
-the glasses variants whose lens region is dark on 100% of avatars (1, 8, 9, 10).
+The word -> variant-id vocabulary lives in knowledge/trait_ontology.json (built by
+knowledge/build_ontology.py from the original curation: inspecting Cartoon Set's example sheets of
+every variant, plus measurements for skin tone/sunglasses). This module is now a pure consumer of
+that file, so the LLM agent (agent/prompts.py) and this rule-based parser share one vocabulary instead
+of drifting apart.
 
     parse("curly red hair, heart sunglasses and a beard")
     -> {'hair': [...curly ids], 'hair_color': [3, 2], 'glasses': [10], 'facial_hair': [...]}, understood, unknown
 """
+import json
 import re
+from pathlib import Path
 
 import numpy as np
 
-HAIR_STYLE = {
-    "bald": [0, 1, 2, 19, 108, 109, 110],
-    "buzz": [18, 20, 22], "shaved": [18, 20, 22],
-    "bun": [55, 68, 84, 102], "topknot": [55, 68, 84], "updo": [55, 68, 84, 102],
-    "pigtails": [3, 4, 28, 29, 41, 96], "buns": [3, 28],
-    "ponytail": [87, 95, 102],
-    "afro": [5, 15, 16],
-    "dreadlocks": [6, 13], "dreads": [6, 13], "locs": [6, 13], "braids": [13],
-    "spiky": [23, 43, 46, 50, 52, 54, 77], "mohawk": [43, 46, 50],
-    "curly": [5, 7, 8, 9, 10, 11, 15, 16, 17, 24, 25, 27, 30, 31, 34, 35, 36, 37, 38, 39, 56, 78, 90, 97, 106],
-    "wavy": [26, 32, 33, 65, 82, 85, 91, 93, 94, 100, 103, 104],
-    "straight": [40, 42, 47, 57, 58, 59, 60, 63, 69, 71, 79, 80],
-    "long": [6, 7, 13, 25, 33, 40, 47, 57, 58, 59, 60, 63, 65, 69, 71, 78, 79, 80, 82, 85, 93, 100, 103, 104],
-    "medium": [26, 30, 32, 42, 48, 88, 98],
-    "short": [12, 14, 17, 21, 22, 23, 44, 45, 49, 51, 53, 61, 62, 66, 72, 73, 74, 76, 83, 89, 92, 99, 105, 107],
-    "bob": [67, 75, 81, 86, 94, 101],
-    "swept": [48, 49, 53, 64, 70, 72, 88, 89], "sidepart": [48, 49, 53, 64, 70, 72, 88, 89],
-}
-HAIR_COLOR = {
-    "platinum": [0], "blonde": [0, 1], "blond": [0, 1], "golden": [1], "yellow": [1],
-    "ginger": [2], "orange": [2], "red": [3, 2], "redhead": [3, 2], "auburn": [3],
-    "honey": [4], "sandy": [4], "copper": [5], "brown": [6, 5], "brunette": [6], "chestnut": [5],
-    "black": [7], "dark": [7, 6], "grey": [8], "gray": [8], "silver": [9, 8], "white": [9],
-}
-GLASSES_SHAPE = {
-    "glasses": list(range(11)), "specs": list(range(11)), "spectacles": list(range(11)),
-    "sunglasses": [1, 8, 9, 10], "shades": [1, 8, 9, 10],
-    "heart": [10], "cateye": [8], "round": [0, 9], "rectangular": [2, 3], "square": [2, 3],
-    "clear": [0, 2, 3, 4, 5, 6, 7],
-}
-GLASSES_COLOR = {"black": [0], "brown": [1], "blue": [2], "red": [3], "grey": [4], "gray": [4],
-                 "gold": [5], "golden": [5], "yellow": [5], "pink": [6]}
-FACIAL_HAIR = {
-    "beard": [2, 3, 8, 9, 10, 11], "bearded": [2, 3, 8, 9, 10, 11],
-    "goatee": [4, 7], "mustache": [5, 6], "moustache": [5, 6],
-}
-SKIN = {  # face_color variants are ordered dark (0) -> light (10)
-    "dark": [0, 1, 2], "deep": [0, 1], "brown": [3, 4, 5], "tan": [5, 6, 7], "tanned": [5, 6, 7],
-    "olive": [5, 6], "medium": [5, 6, 7], "light": [8, 9, 10], "fair": [9, 10], "pale": [10],
-}
-NO_GLASSES = [11]
-CLEAN_SHAVEN = [0, 1, 14]
+ONTOLOGY_PATH = Path(__file__).resolve().parent / "knowledge" / "trait_ontology.json"
+ONTOLOGY = json.loads(ONTOLOGY_PATH.read_text())
+
+HAIR_STYLE = ONTOLOGY["traits"]["hair"]["index"]
+HAIR_COLOR = ONTOLOGY["traits"]["hair_color"]["index"]
+GLASSES_SHAPE = ONTOLOGY["traits"]["glasses"]["index"]
+GLASSES_COLOR = ONTOLOGY["traits"]["glasses_color"]["index"]
+FACIAL_HAIR = ONTOLOGY["traits"]["facial_hair"]["index"]
+SKIN = ONTOLOGY["traits"]["face_color"]["index"]
+NO_GLASSES = ONTOLOGY["traits"]["glasses"]["special"]["no_glasses"]
+CLEAN_SHAVEN = ONTOLOGY["traits"]["facial_hair"]["special"]["clean_shaven"]
 FILLER = {"a", "an", "the", "with", "and", "has", "have", "having", "wearing", "wears", "person", "guy", "girl",
           "man", "woman", "avatar", "some", "of", "in", "very", "lots", "big", "hair", "haired", "on", "her",
           "his", "their", "who", "is", "skin", "skinned", "complexion", "eyes", "face", "cut", "style", "tone"}

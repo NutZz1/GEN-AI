@@ -7,3 +7,9 @@ env/
 # Downloaded training data and archives are too large for a normal GitHub repository.
 data/cartoonset10k/
 data/cartoonset10k.tgz
+
+# Secrets - never commit an API key.
+.env
+
+# Agent run logs are per-machine runtime output, not source.
+logs/*.jsonl

@@ -3,3 +3,9 @@ numpy
 pillow
 matplotlib
 streamlit
+anthropic
+pydantic>=2
+python-dotenv
+pytest
+# requests is only needed for the optional local-Ollama backend (agent/llm.py); install manually if
+# you use it - not pinned here since most users won't need it.
