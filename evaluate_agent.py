@@ -109,7 +109,7 @@ def make_llm_parse_fn(llm, use_retry_validation):
             result = parse_request(llm, prompt)  # includes the pydantic validate + one re-ask + fallback
             return result.constraints, result.source
         # LLM parser with NO validation/retry - a single raw call, to isolate what validation buys us
-        resp = llm.chat(system=PARSER_PROMPT_V1, messages=[{"role": "user", "content": prompt}])
+        resp = llm.chat(system=PARSER_PROMPT_V1, messages=[{"role": "user", "content": prompt}], json_mode=True)
         if resp.error:
             cons, _, _ = t2a.parse(prompt)
             return cons, "rule_fallback"

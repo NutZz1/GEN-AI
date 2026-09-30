@@ -16,9 +16,11 @@ PROVIDER = os.environ.get("AVATARBLEND_LLM_PROVIDER", "anthropic")  # "anthropic
 ANTHROPIC_MODEL = os.environ.get("AVATARBLEND_AGENT_MODEL", "claude-sonnet-5")
 OLLAMA_MODEL = os.environ.get("AVATARBLEND_OLLAMA_MODEL", "llama3.1")
 OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
+OLLAMA_NUM_CTX = int(os.environ.get("AVATARBLEND_OLLAMA_NUM_CTX", "8192"))      # parser prompt + tools ~2-3k tokens
+OLLAMA_KEEP_ALIVE = os.environ.get("AVATARBLEND_OLLAMA_KEEP_ALIVE", "30m")      # don't reload the model each turn
 
 MAX_TOKENS = int(os.environ.get("AVATARBLEND_AGENT_MAX_TOKENS", "1024"))
 MAX_RETRIES = int(os.environ.get("AVATARBLEND_AGENT_MAX_RETRIES", "3"))
-REQUEST_TIMEOUT_S = float(os.environ.get("AVATARBLEND_AGENT_TIMEOUT", "30"))
+REQUEST_TIMEOUT_S = float(os.environ.get("AVATARBLEND_AGENT_TIMEOUT", "60"))   # first call may load the model
 
 LOG_PATH = Path(__file__).resolve().parent.parent / "logs" / "agent_runs.jsonl"

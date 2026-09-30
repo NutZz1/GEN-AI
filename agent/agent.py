@@ -6,6 +6,7 @@ This is what lets `agent/agent.py` be imported and exercised by tests and by eva
 any API key - see agent/llm.py's `LLMClient.available`.
 """
 import json
+import re
 import time
 from dataclasses import asdict, dataclass, field
 
@@ -57,7 +58,7 @@ def parse_request(llm, user_text):
         cons, understood, unknown = t2a.parse(user_text)
         return ParseResult(cons, understood, unknown, source="rule_fallback")
 
-    resp = llm.chat(system=PARSER_PROMPT_V1, messages=[{"role": "user", "content": user_text}])
+    resp = llm.chat(system=PARSER_PROMPT_V1, messages=[{"role": "user", "content": user_text}], json_mode=True)
     parsed, err = (None, resp.error) if resp.error else validate_parser_json(resp.text)
     source = "llm"
     if parsed is None:
@@ -65,7 +66,7 @@ def parse_request(llm, user_text):
                      f"object matching the schema - no prose, no markdown fences.")
         resp2 = llm.chat(system=PARSER_PROMPT_V1, messages=[
             {"role": "user", "content": user_text}, {"role": "assistant", "content": resp.text or "(no output)"},
-            {"role": "user", "content": retry_msg}])
+            {"role": "user", "content": retry_msg}], json_mode=True)
         parsed, err2 = (None, resp2.error) if resp2.error else validate_parser_json(resp2.text)
         source = "llm_retry"
         if parsed is None:
@@ -76,20 +77,60 @@ def parse_request(llm, user_text):
                        retries=(1 if source == "llm_retry" else 0))
 
 
-def _heuristic_plan(ctx, user_text, constraints):
-    """No LLM available: a small deterministic router, good enough to keep the app usable offline."""
+EDIT_TOOLS = ("edit_trait", "edit_traits")
+# phrasings that modify the avatar the user is looking at ("make it blonde", "add glasses", "remove the beard",
+# "take off the glasses", "now a mustache")
+_EDIT_PATTERN = re.compile(r"\b(change|edit|make|give|add|remove|take off|take away|put|turn|switch|swap|set|"
+                           r"get rid|lose|drop|delete|shave|instead|now|also|without|no|more|less|dye|paint)\b")
+# phrasings that ask for a different avatar, even when one is active
+_NEW_PATTERN = re.compile(r"\b(new (avatar|one|person|character)|from scratch|start over|start again|brand new|"
+                          r"another (one|avatar)|generate|create)\b")
+
+
+def _heuristic_plan(ctx, user_text, constraints, active=None):
+    """No LLM available: a small deterministic router, good enough to keep the app usable offline.
+    `active` is the avatar the user is currently looking at; follow-up edits apply to it (falling back to the
+    most recently created avatar), not to whichever candidate happened to be generated last."""
     lower = user_text.lower()
     names = list(ctx.avatars)
+    current = active if active in ctx.avatars else (names[-1] if names else None)
     if len(names) >= 2 and any(w in lower for w in ("blend", "mix", "combine")):
-        return {"name": "blend", "input": {"avatar_a": names[-2], "avatar_b": names[-1], "alpha": 0.5}}
+        other = next((n for n in reversed(names) if n != current), names[-2])
+        return {"name": "blend", "input": {"avatar_a": current, "avatar_b": other, "alpha": 0.5}}
     if len(names) >= 2 and any(w in lower for w in ("breed", "evolve", "kids", "children")):
-        return {"name": "breed", "input": {"avatar_a": names[-2], "avatar_b": names[-1], "n": 6}}
-    if names and any(w in lower for w in ("change", "edit", "make the", "make it", "give it", "give this")):
-        trait = next((t for t in constraints if t in TRAIT_NAMES), None)
-        if trait:
-            return {"name": "edit_trait", "input": {"avatar": names[-1], "trait": trait,
-                                                     "variant": int(constraints[trait][0]), "strength": 1.0}}
+        other = next((n for n in reversed(names) if n != current), names[-2])
+        return {"name": "breed", "input": {"avatar_a": current, "avatar_b": other, "n": 6}}
+    if current and _EDIT_PATTERN.search(lower) and not _NEW_PATTERN.search(lower):
+        edits = {t: ids for t, ids in constraints.items() if t in TRAIT_NAMES and ids}
+        if not edits:
+            return None  # an edit we can't map to any trait: keep the avatar rather than replace it with a random one
+        return {"name": "edit_traits", "input": {"avatar": current, "edits": edits, "strength": 1.0}}
     return {"name": "generate_from_constraints", "input": {"constraints": constraints}}
+
+
+def _edit_key(call):
+    """(avatar, traits) identifying one edit, so a retry of the same edit can restore what it started from."""
+    inp = call["input"]
+    if call["name"] == "edit_trait":
+        return inp.get("avatar"), (inp.get("trait"),)
+    if call["name"] == "edit_traits":
+        return inp.get("avatar"), tuple(sorted(inp.get("edits", {})))
+    return None
+
+
+def _prepare_edit(ctx, call, snapshots):
+    """Edits overwrite the avatar in place and relabel it, so re-applying the same edit (a stronger retry after a
+    failed verification) on the already-edited avatar is a no-op. Remember the state an edit started from and put
+    it back before that same edit is tried again."""
+    key = _edit_key(call)
+    if key is None or key[0] not in ctx.avatars:
+        return
+    if key in snapshots:
+        a = snapshots[key]
+        ctx.avatars[key[0]] = {"z": a["z"].copy(), "labels": dict(a["labels"]), "img": a["img"].copy()}
+    else:
+        a = ctx.avatars[key[0]]
+        snapshots[key] = {"z": a["z"].copy(), "labels": dict(a["labels"]), "img": a["img"].copy()}
 
 
 def verify_avatar(ctx, avatar, constraints):
@@ -153,10 +194,13 @@ def _run_tool(ctx, call):
     return primary, summary
 
 
-def plan_act_verify(ctx, llm, user_text, parse: ParseResult):
-    trace, retries = [], 0
+def plan_act_verify(ctx, llm, user_text, parse: ParseResult, active=None):
+    trace, retries, snapshots = [], 0, {}
     plan_source = "llm" if llm.available else "heuristic"
     session_note = f"Avatars already in this session: {list(ctx.avatars) or '(none yet)'}"
+    if active in ctx.avatars:
+        session_note += (f"\nActive avatar (the one the user is looking at - \"it\", \"this\" and \"the hair\" "
+                         f"refer to it): {active}")
     messages = [{"role": "user", "content": f"User request: {user_text}\n\nParsed trait constraints: "
                                             f"{json.dumps(parse.constraints)}\n\n{session_note}"}]
     final_avatar = None
@@ -175,11 +219,12 @@ def plan_act_verify(ctx, llm, user_text, parse: ParseResult):
                 call = resp.tool_calls[0] if resp.tool_calls else None
             tool_call = {"name": call["name"], "input": call["input"]} if call else None
         else:
-            tool_call = _heuristic_plan(ctx, user_text, parse.constraints) if retries == 0 else None
+            tool_call = _heuristic_plan(ctx, user_text, parse.constraints, active) if retries == 0 else None
 
         if tool_call is None or tool_call["name"] not in TOOL_IMPLS:
             break
         try:
+            _prepare_edit(ctx, tool_call, snapshots)
             avatar, summary = _run_tool(ctx, tool_call)
         except Exception as e:
             trace.append(ToolTrace(tool_call["name"], tool_call["input"], {"error": str(e)}, None))
@@ -199,9 +244,15 @@ def plan_act_verify(ctx, llm, user_text, parse: ParseResult):
                 {"type": "text", "text": f"verification_failed: {json.dumps(missed)}. Try again with "
                                           f"different arguments to fix the trait(s) that missed."}]})
         else:
-            # heuristic self-correction: re-roll generation with a fresh random draw
-            tool_call = {"name": "generate_from_constraints", "input": {"constraints": parse.constraints}}
+            if tool_call["name"] in EDIT_TOOLS:
+                # heuristic self-correction for an edit: redo it from the avatar's original state, pushed harder
+                tool_call = {"name": tool_call["name"],
+                             "input": {**tool_call["input"], "strength": 1.0 + 0.5 * retries}}
+            else:
+                # heuristic self-correction for a generation: re-roll with a fresh random draw
+                tool_call = {"name": "generate_from_constraints", "input": {"constraints": parse.constraints}}
             try:
+                _prepare_edit(ctx, tool_call, snapshots)
                 avatar, summary = _run_tool(ctx, tool_call)
             except Exception as e:
                 trace.append(ToolTrace(tool_call["name"], tool_call["input"], {"error": str(e)}, None))
@@ -253,6 +304,10 @@ def explain(llm, user_text, parse: ParseResult, trace):
         # failure with no real result to describe, a model will readily fabricate a success story
         # (observed with a local model: it claimed "the classifier verified all traits matched" when
         # no tool had actually run). Be direct instead of risking that.
+        if last is None and not llm.available:
+            # rule-based planner found nothing to change: say what it does understand instead of a generic error
+            return ("I couldn't tell which trait to change, so I left your avatar as it is. Try naming a trait, "
+                    "e.g. \"make the hair red\", \"add sunglasses\", \"remove the beard\" or \"make the eyes blue\".")
         reason = last.result_summary.get("error") if last else "couldn't decide what to do with that request"
         return (f"Sorry, I couldn't generate that ({reason}). Try rephrasing, or turn off \"Use LLM "
                 f"agent\" in the sidebar to fall back to the rule-based parser.")
@@ -264,10 +319,14 @@ def explain(llm, user_text, parse: ParseResult, trace):
         if not resp.error and resp.text.strip():
             return resp.text.strip()
     # template fallback
-    bits = [f"Generated an avatar from your request \"{user_text}\"."]
+    done = {"blend": "Blended two avatars", "breed": "Bred a litter", "trait_mix": "Mixed traits between two avatars"}
+    if last.tool in EDIT_TOOLS:
+        bits = [f"Updated your avatar for \"{user_text}\"."]
+    else:
+        bits = [f"{done.get(last.tool, 'Generated an avatar')} from your request \"{user_text}\"."]
     if verify:
-        hits = [t for t, v in verify.items() if v["hit"]]
-        misses = [t for t, v in verify.items() if not v["hit"]]
+        hits = [t.replace("_", " ") for t, v in verify.items() if v["hit"]]
+        misses = [t.replace("_", " ") for t, v in verify.items() if not v["hit"]]
         if hits:
             bits.append(f"Confirmed: {', '.join(hits)}.")
         if misses:
@@ -277,10 +336,11 @@ def explain(llm, user_text, parse: ParseResult, trace):
     return " ".join(bits)
 
 
-def run_once(ctx, llm, user_text, log=True):
+def run_once(ctx, llm, user_text, log=True, active=None):
+    """`active`: name of the avatar the user is currently looking at, so "make it red" edits that one."""
     t0 = time.time()
     parse = parse_request(llm, user_text)
-    final_avatar, trace, retries, plan_source = plan_act_verify(ctx, llm, user_text, parse)
+    final_avatar, trace, retries, plan_source = plan_act_verify(ctx, llm, user_text, parse, active)
     explanation = explain(llm, user_text, parse, trace)
     result = AgentRunResult(prompt=user_text, parse=parse, plan_source=plan_source, trace=trace,
                             final_avatar=final_avatar, explanation=explanation,

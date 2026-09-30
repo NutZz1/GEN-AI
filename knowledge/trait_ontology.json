@@ -1733,28 +1733,64 @@
   "eye_color": {
    "label": "Eye colour",
    "n_variants": 5,
-   "index": {},
+   "index": {
+    "brown": [
+     0
+    ],
+    "blue": [
+     1
+    ],
+    "green": [
+     2
+    ],
+    "grey": [
+     3
+    ],
+    "gray": [
+     3
+    ],
+    "black": [
+     4
+    ],
+    "dark": [
+     4,
+     0
+    ]
+   },
    "special": {},
    "variants": {
     "0": {
-     "tags": [],
-     "description": ""
+     "tags": [
+      "brown",
+      "dark"
+     ],
+     "description": "brown, dark"
     },
     "1": {
-     "tags": [],
-     "description": ""
+     "tags": [
+      "blue"
+     ],
+     "description": "blue"
     },
     "2": {
-     "tags": [],
-     "description": ""
+     "tags": [
+      "green"
+     ],
+     "description": "green"
     },
     "3": {
-     "tags": [],
-     "description": ""
+     "tags": [
+      "grey",
+      "gray"
+     ],
+     "description": "grey, gray"
     },
     "4": {
-     "tags": [],
-     "description": ""
+     "tags": [
+      "black",
+      "dark"
+     ],
+     "description": "black, dark"
     }
    }
   }

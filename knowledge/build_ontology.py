@@ -64,6 +64,11 @@ SKIN = {  # face_color variants are ordered dark (0) -> light (10)
 }
 NO_GLASSES = [11]
 CLEAN_SHAVEN = [0, 1, 14]
+# eye_color variants measured from the dataset (not guessed): with no glasses, each variant's mean image
+# differs from the global mean only at the iris (Cartoon Set attributes are independent), so the mean RGB
+# at that mask names the variant: 0 brown (118,76,61), 1 blue (61,111,147), 2 green (110,137,73),
+# 3 grey (136,149,146), 4 black (22,22,22).
+EYE_COLOR = {"brown": [0], "blue": [1], "green": [2], "grey": [3], "gray": [3], "black": [4], "dark": [4, 0]}
 
 # trait -> (human label, word index, special named variant-sets)
 TRAIT_DEFS = {
@@ -73,9 +78,9 @@ TRAIT_DEFS = {
     "glasses_color": ("Glasses colour", GLASSES_COLOR, {}),
     "facial_hair": ("Facial hair", FACIAL_HAIR, {"clean_shaven": CLEAN_SHAVEN}),
     "face_color": ("Skin tone", SKIN, {}),
-    # no curated word vocabulary exists yet for these two (never inspected/measured) - counts only.
+    # no curated word vocabulary exists yet for face_shape (never inspected/measured) - counts only.
     "face_shape": ("Face shape", {}, {}),
-    "eye_color": ("Eye colour", {}, {}),
+    "eye_color": ("Eye colour", EYE_COLOR, {}),
 }
 
 # counts observed directly from data/cartoonset128.npz on 2026-09-29 (see git log for this file);

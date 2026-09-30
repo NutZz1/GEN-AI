@@ -47,10 +47,18 @@ class ParsedConstraints(BaseModel):
         return {t: getattr(self, t) for t in TRAIT_NAMES if getattr(self, t) is not None}
 
 
+def _strip_wrapping(raw_text):
+    """Small local models often wrap the JSON in ```json fences or a sentence; keep just the outermost {...}.
+    Anything that still isn't valid JSON after this is rejected (and re-asked) as before."""
+    text = (raw_text or "").strip()
+    start, end = text.find("{"), text.rfind("}")
+    return text[start:end + 1] if 0 <= start < end else text
+
+
 def validate_parser_json(raw_text):
     """raw_text -> (ParsedConstraints, None) or (None, error_message)."""
     try:
-        data = json.loads(raw_text)
+        data = json.loads(_strip_wrapping(raw_text))
     except json.JSONDecodeError as e:
         return None, f"not valid JSON: {e}"
     try:

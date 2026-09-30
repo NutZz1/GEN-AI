@@ -54,9 +54,12 @@ vocabulary) actually names.
   prompt can never drift out of sync.
   - Coverage: 111/111 hairstyles, 10/10 hair colours, 11/12 glasses (the "no glasses" variant has no
     descriptive word, by definition), 7/7 glasses colours, 10/15 facial-hair variants, 11/11 skin
-    tones have at least one natural-language tag. `face_shape` and `eye_color` have **no** curated
-    vocabulary (never inspected/measured in the original project) - the ontology records their
-    variant counts only, and the agent falls back to random/LDA-inferred choices for them.
+    tones, 5/5 eye colours have at least one natural-language tag. Eye colours were **measured, not
+    guessed**: Cartoon Set attributes are independent, so with glasses absent each eye-colour
+    variant's mean image differs from the global mean only at the iris; the mean RGB there gives
+    0 = brown, 1 = blue, 2 = green, 3 = grey, 4 = black (checked visually in a rendered grid).
+    `face_shape` has **no** curated vocabulary (never inspected/measured) - the ontology records its
+    variant count only, and the agent falls back to random/LDA-inferred choices for it.
 - `knowledge/build_prompt_testset.py` - generates `knowledge/prompt_testset.jsonl`, ~109 natural
   language avatar requests with gold trait constraints, used by `evaluate_agent.py` to compare the
   rule-based parser against the LLM parser. `easy`/`compositional`/`negation` prompts are built from

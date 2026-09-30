@@ -8,9 +8,9 @@
   "rule_based": {
    "label": "rule_based",
    "overall": {
-    "precision": 0.9666666666666667,
-    "recall": 0.9666666666666667,
-    "exact_match": 0.95
+    "precision": 0.9333333333333333,
+    "recall": 0.9333333333333333,
+    "exact_match": 0.9166666666666666
    },
    "by_category": {
     "compositional": {
@@ -29,9 +29,9 @@
      "exact_match": 1.0
     },
     "blend_edit": {
-     "precision": 1.0,
-     "recall": 1.0,
-     "exact_match": 1.0
+     "precision": 0.75,
+     "recall": 0.75,
+     "exact_match": 0.75
     },
     "easy": {
      "precision": 1.0,
@@ -44,7 +44,7 @@
      "exact_match": 0.0
     }
    },
-   "mean_latency_s": 1.0474522908528645e-05,
+   "mean_latency_s": 0.00012160142262776693,
    "fallback_rate": 1.0,
    "n": 30
   },
@@ -58,7 +58,7 @@
  },
  "n_failures_after_self_correct": 3,
  "agent_realism_vs_real": {
-  "fid_style_agent_vs_real": 45.05635397450172,
+  "fid_style_agent_vs_real": 45.05672325270842,
   "n_real": 1000,
   "n_agent": 52
  }

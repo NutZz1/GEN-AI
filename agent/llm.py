@@ -30,8 +30,9 @@ class LLMResponse:
 class LLMClient:
     name = "none"
     available = False
+    reason = "no LLM backend configured"   # why this client is unavailable, shown in the app sidebar
 
-    def chat(self, system, messages, tools=None) -> LLMResponse:
+    def chat(self, system, messages, tools=None, json_mode=False) -> LLMResponse:
         return LLMResponse(error="no LLM backend configured")
 
 
@@ -44,7 +45,7 @@ class AnthropicClient(LLMClient):
         self.model = model
         self.available = True
 
-    def chat(self, system, messages, tools=None) -> LLMResponse:
+    def chat(self, system, messages, tools=None, json_mode=False) -> LLMResponse:
         try:
             kwargs = {"model": self.model, "max_tokens": config.MAX_TOKENS, "system": system, "messages": messages}
             if tools:
@@ -63,15 +64,26 @@ class OllamaClient(LLMClient):
     def __init__(self, model, host):
         import requests  # deferred
         self._requests = requests
-        self.model, self.host = model, host
-        r = requests.get(f"{host}/api/tags", timeout=3)
+        self.model, self.host = model, host.rstrip("/")
+        r = requests.get(f"{self.host}/api/tags", timeout=5)
         r.raise_for_status()
+        installed = [m.get("name", "") for m in r.json().get("models", [])]
+        # "llama3.1" matches "llama3.1:latest" / "llama3.1:8b"; an exact tag ("llama3.1:8b") must match exactly.
+        if not any(n == model or (":" not in model and n.split(":")[0] == model) for n in installed):
+            raise RuntimeError(f"model {model!r} is not installed on {self.host} (installed: "
+                               f"{', '.join(installed) or 'none'}) - run `ollama pull {model}` there")
         self.available = True
 
-    def chat(self, system, messages, tools=None) -> LLMResponse:
+    def chat(self, system, messages, tools=None, json_mode=False) -> LLMResponse:
         payload = {"model": self.model, "messages": [{"role": "system", "content": system}] +
                    [{"role": m["role"], "content": m["content"] if isinstance(m["content"], str) else json.dumps(m["content"])}
-                    for m in messages], "stream": False}
+                    for m in messages], "stream": False,
+                   # the parser prompt + tool schemas are ~2-3k tokens: Ollama's default context window can
+                   # silently truncate the start of the prompt (the instructions and ontology), so set it.
+                   "options": {"num_ctx": config.OLLAMA_NUM_CTX, "temperature": 0},
+                   "keep_alive": config.OLLAMA_KEEP_ALIVE}  # keep the model loaded between chat turns
+        if json_mode and not tools:  # constrain the parser to valid JSON (tool calls use their own format)
+            payload["format"] = "json"
         if tools:  # OpenAI-style tool schema; only understood by newer local models
             payload["tools"] = [{"type": "function", "function": t} for t in tools]
         try:
@@ -95,13 +107,19 @@ def get_client() -> LLMClient:
         if provider == "anthropic":
             key = os.environ.get("ANTHROPIC_API_KEY")
             if not key:
-                return LLMClient()
+                return _unavailable("no ANTHROPIC_API_KEY set")
             model = os.environ.get("AVATARBLEND_AGENT_MODEL", config.ANTHROPIC_MODEL)
             return AnthropicClient(key, model)
         if provider == "ollama":
             model = os.environ.get("AVATARBLEND_OLLAMA_MODEL", config.OLLAMA_MODEL)
             host = os.environ.get("OLLAMA_HOST", config.OLLAMA_HOST)
             return OllamaClient(model, host)
-    except Exception:
-        return LLMClient()
-    return LLMClient()
+    except Exception as e:
+        return _unavailable(f"{provider} backend failed: {type(e).__name__}: {str(e)[:200]}")
+    return _unavailable(f"LLM provider {provider!r} is not 'anthropic' or 'ollama'")
+
+
+def _unavailable(reason) -> LLMClient:
+    client = LLMClient()
+    client.reason = reason
+    return client

@@ -11,6 +11,7 @@ from PIL import Image
 from agent import agent as agent_core
 from agent import config as agent_config
 from agent import llm as agent_llm
+from agent import prompts as agent_prompts
 from agent.tools import AgentContext, compute_residual_pool
 from avatarblend import (decode_np, describe_device, encode_mu, get_device, load_dataset, load_model,
                          model_device, pixel_blend)
@@ -59,8 +60,19 @@ def get_agent_ctx():
 def get_llm_client(use_llm):
     if st.session_state.get("_llm_toggle") != use_llm or "llm_client" not in st.session_state:
         st.session_state["_llm_toggle"] = use_llm
-        st.session_state["llm_client"] = agent_llm.get_client() if use_llm else agent_llm.LLMClient()
+        st.session_state["llm_client"] = (agent_llm.get_client() if use_llm
+                                          else agent_llm._unavailable("'Use LLM agent' is switched off"))
     return st.session_state["llm_client"]
+
+
+def variant_name(trait, variant):
+    """'curly, long' style description from the trait ontology, or 'variant 7' when a variant has no words."""
+    info = agent_prompts.ONTOLOGY["traits"][trait]
+    desc = info["variants"][str(variant)]["description"]
+    if desc:
+        return desc
+    special = next((name for name, ids in info.get("special", {}).items() if variant in ids), None)
+    return special.replace("_", " ") if special else f"variant {variant}"
 
 
 def big(img, size=DISPLAY):
@@ -168,8 +180,9 @@ def tab_describe(client, n_candidates, residual_strength):
                 direct = decode_np(ctx.model, encode_mu(ctx.model, img[None]))[0]
                 pc2.image(big(direct, 160), caption="Direct VAE encode/decode (often distorted - "
                                                     "the VAE was never trained on real photos)")
-                understood = [f"{LABELS.get(t, t)}: variant {v[0]} ({round(conf[t] * 100)}% confident)"
-                             for t, v in cons.items()]
+                # no confidence percentages: the classifier only ever saw cartoons, so on a real photo its
+                # softmax "confidence" is not a meaningful probability (it is ~95-100% even on random noise)
+                understood = [f"{LABELS.get(t, t)}: {variant_name(t, v[0])}" for t, v in cons.items()]
                 parse = agent_core.ParseResult(constraints=cons, understood=understood, unknown=[], source="photo")
                 with st.spinner("Generating candidates from the guessed traits..."):
                     candidates = agent_core.generate_candidates_from_parse(ctx, parse, n_candidates,
@@ -179,8 +192,10 @@ def tab_describe(client, n_candidates, residual_strength):
                     st.session_state["session_gallery"].append({"name": c["name"], "img": c["img"]})
                 st.session_state["describe_messages"].append({"role": "user", "content": "[uploaded a photo]"})
                 st.session_state["describe_messages"].append({"role": "assistant", "content":
-                    f"Guessed from your photo: {', '.join(understood)}. Generated {len(candidates)} "
-                    f"candidates below - pick one to keep going."})
+                    f"Best-effort guess from your photo (the classifier was trained on cartoons, not real "
+                    f"faces, so check it): {', '.join(understood)}. Generated {len(candidates)} candidates "
+                    f"below - ✅ means the avatar matches the guessed trait, not that the guess matches you. "
+                    f"Pick one to keep going."})
                 st.rerun()
 
     for msg in st.session_state["describe_messages"]:
@@ -209,7 +224,7 @@ def tab_describe(client, n_candidates, residual_strength):
         else:
             with st.spinner("Thinking..."):
                 try:
-                    result = agent_core.run_once(ctx, client, prompt)
+                    result = agent_core.run_once(ctx, client, prompt, active=st.session_state["describe_active"])
                     if result.final_avatar:
                         st.session_state["describe_active"] = result.final_avatar
                         st.session_state["session_gallery"].append(
@@ -431,8 +446,8 @@ def main():
         model_name = getattr(client, "model", None) or getattr(client, "_model", "")
         st.sidebar.success(f"🟢 LLM: {client.name} ({model_name})" if model_name else f"🟢 LLM: {client.name}")
     else:
-        st.sidebar.warning("⚪ No LLM configured - using the rule-based parser + heuristic planner "
-                           "(see .env.example to add an API key).")
+        st.sidebar.warning(f"⚪ No LLM connected ({client.reason}) - using the rule-based parser + heuristic "
+                           "planner (see .env.example to add an API key or a local Ollama model).")
     n_candidates = st.sidebar.slider("Candidates per request", 4, 8, 4)
     residual_strength = st.sidebar.slider("Residual strength", 0.0, 1.0, 0.7, 0.05,
                                           help="How much random fine detail candidates get beyond the requested traits.")

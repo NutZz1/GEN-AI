@@ -102,6 +102,25 @@ def edit_trait(ctx, avatar, trait, variant, strength=1.0, name=None):
     return {"avatar": name, "labels": labels, "img": img}
 
 
+def edit_traits(ctx, avatar, edits, strength=1.0, name=None):
+    """Several trait edits on one existing avatar in one step: edits = {trait: [acceptable variant ids]}.
+    Used by the no-LLM planner ("make it blonde with green eyes"); not exposed in TOOL_SCHEMAS. A trait whose
+    current variant is already acceptable is left alone, otherwise the acceptable variant whose latent offset
+    is closest to the current one is chosen, so "shorter hair" stays as close to the current look as possible."""
+    a = ctx.get(avatar)
+    z, labels = a["z"], dict(a["labels"])
+    for t, ids in edits.items():
+        if t not in ctx.traits.traits or not ids or labels[t] in ids:
+            continue
+        cur = ctx.traits.offsets[t][labels[t]]
+        variant = min(ids, key=lambda i: float(np.linalg.norm(ctx.traits.offsets[t][i] - cur)))
+        z, labels = ctx.traits.edit(z, labels, t, int(variant), float(strength))
+    img = ctx.decode(z)[0]
+    name = name or avatar
+    ctx.register(name, z, labels, img)
+    return {"avatar": name, "labels": labels, "img": img}
+
+
 def breed(ctx, avatar_a, avatar_b, n=6, noise=0.3, blend_prob=0.2, point_mutation=0.05):
     pa, pb = ctx._lineage_ids[avatar_a], ctx._lineage_ids[avatar_b]
     child_ids = ctx.lineage.breed(pa, pb, ctx.traits, ctx.decode, n, ctx.rng, noise, blend_prob, point_mutation)
@@ -127,7 +146,8 @@ def classify_avatar(ctx, avatar):
 
 
 TOOL_IMPLS = {"generate_from_constraints": generate_from_constraints, "blend": blend, "trait_mix": trait_mix,
-              "edit_trait": edit_trait, "breed": breed, "classify_avatar": classify_avatar}
+              "edit_trait": edit_trait, "edit_traits": edit_traits, "breed": breed,
+              "classify_avatar": classify_avatar}
 
 TOOL_SCHEMAS = [
     {"name": "generate_from_constraints", "description":
